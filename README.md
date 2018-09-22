@@ -1,6 +1,6 @@
-# cefet-lpii-tp4
+﻿# cefet-lpii-tp4
 4º Trabalho Prático do Laboratório de Linguagem de Programação II do CEFET-MG (2018)
-Implementação do Hosten (sistema de gerenciamento interno de hospedagem feito para o Trabalho de Conclusão do Curso Técnico de Informática do CEFET-MG) utilizando o framework JSF.
+Implementação do Hosten (sistema de gerenciamento interno de hospedagem feito para o Trabalho de Conclusão do Curso Técnico de Informática do CEFET-MG) utilizando JSF e Primefaces.
 
 ### Alunos
 * Emanuela Amorim Jorge
