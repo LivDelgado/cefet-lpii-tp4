@@ -45,12 +45,9 @@ public class LoginMB implements Serializable {
     }
     
     public String validaLogin () {
-//        System.out.println("validaLogin");
-  
         IManterUsuario manterUsuario = new ManterUsuarioProxy();
         try {
             usuarioLogin = manterUsuario.usuarioLogin(email, senha);
-//            System.out.println(usuarioLogin);
             if (usuarioLogin != null) {
                 return "sucesso";
             } else {

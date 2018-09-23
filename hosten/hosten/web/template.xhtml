@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Hosten</title>
+    </h:head>
+
+    <h:body>
+        <h:form>
+            <p:commandButton id="dynaButton" value="Menu" type="button" icon="ui-icon-extlink"/>
+            <p:tieredMenu overlay="true" trigger="dynaButton" my="left top" at="left bottom" style="width:180px">
+                <p:menuitem value="Cargos" />
+                <p:menuitem value="Funcionários" />
+                <p:menuitem value="Hóspedes" />
+                <p:submenu label="Quartos">
+                    <p:menuitem value="Visualizar quartos" />
+                    <p:menuitem value="Estados dos quartos" />
+                    <p:menuitem value="Categorias de quartos" />
+                    <p:menuitem value="Itens de conforto"  outcome="/view/itens-conforto.jsf"/>
+                </p:submenu>
+                <p:submenu label="Serviços">
+                    <p:menuitem value="Visualizar serviços" />
+                    <p:menuitem value="Visualizar áreas de serviço" />
+                </p:submenu>
+            </p:tieredMenu>
+        </h:form>
+
+        <div id="top" style="text-align: center">
+            <h4><ui:insert name="top">Nome do Registro</ui:insert></h4>
+        </div>
+
+        <div id="content">
+            <h4><ui:insert name="content">Conteúdo</ui:insert></h4>
+        </div>
+    </h:body>
+
+</html>
