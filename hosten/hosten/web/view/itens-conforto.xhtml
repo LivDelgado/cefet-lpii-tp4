@@ -11,36 +11,39 @@
     <h:body>
 
         <ui:composition template="../template.xhtml">
-            <ui:define name="top">
-                Itens de Conforto
-            </ui:define>
 
             <ui:define name="content">
-                <p:panelGrid columns="3">
-                    <p:dataTable var="item" value="#{itemMB.listaItens}">
+                <h:form> 
+                    <p:panelGrid columns="3">
+                        <f:facet name="header">
+                            <h:outputText value="Itens de Conforto" style="font-size: 25px"/>
+                        </f:facet>
 
-                        <p:column headerText="Código" style="text-align: center">
-                            <h:outputText value="#{item.codItem}"/>
-                        </p:column>
+                        <p:dataTable var="item" value="#{itemMB.listaItens}">
 
-                        <p:column headerText="Descrição" style="text-align: center">
-                            <h:outputText value="#{item.desItem}"/>
-                        </p:column>
+                            <p:column headerText="Código" sortBy="#{item.codItem}" filterBy="#{item.codItem}" filterStyle="width: 300px" style="text-align: center">
+                                <h:outputText value="#{item.codItem}"/>
+                            </p:column>
 
-                        <p:column headerText="Operações" style="text-align: center">
+                            <p:column headerText="Descrição" sortBy="#{item.desItem}" filterBy="#{item.desItem}" filterStyle="width: 300px" style="text-align: center">
+                                <h:outputText value="#{item.desItem}"/>
+                            </p:column>
 
-                            <p:commandButton type="button" title="Editar" actionListener="#{itemMB.editar}" icon="ui-icon-pencil">
-                                <f:setPropertyActionListener value="#{item}" target="#{itemMB.item}"/>
-                            </p:commandButton>
+                            <p:column headerText="Operações" style="text-align: center">
 
-                            <p:commandButton type="button" title="Deletar" actionListener="#{itemMB.deletar}" icon="ui-icon-trash">
-                                <f:setPropertyActionListener value="#{item}" target="#{itemMB.item}" />
-                            </p:commandButton>
+                                <p:commandButton type="button" title="Editar" actionListener="#{itemMB.editar}" icon="ui-icon-pencil">
+                                    <f:setPropertyActionListener value="#{item}" target="#{itemMB.item}"/>
+                                </p:commandButton>
 
-                        </p:column>
-                    </p:dataTable>
-                    <p:commandButton type="button" title="Novo Item" icon="ui-icon-circle-plus"/>
-                </p:panelGrid>
+                                <p:commandButton type="button" title="Deletar" actionListener="#{itemMB.deletar}" icon="ui-icon-trash">
+                                    <f:setPropertyActionListener value="#{item}" target="#{itemMB.item}" />
+                                </p:commandButton>
+
+                            </p:column>
+                        </p:dataTable>
+                        <p:commandButton type="button" title="Novo Item" icon="ui-icon-circle-plus"/>
+                    </p:panelGrid>
+                </h:form>
             </ui:define>
 
         </ui:composition>
