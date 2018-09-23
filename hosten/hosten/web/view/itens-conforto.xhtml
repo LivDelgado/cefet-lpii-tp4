@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Hosten - Itens de Conforto</title>
+    </h:head>
+    <h:body>
+        <h1>Itens de Conforto</h1>
+        <p:panelGrid columns="3">
+            <p:dataTable var="item" value="#{itemMB.listaItens}">
+                <p:column headerText="Código">
+                    <h:outputText value="#{item.codItem}"/>
+                </p:column>
+                <p:column headerText="Descrição">
+                    <h:outputText value="#{item.desItem}"/>
+                </p:column>
+                <p:column>
+                </p:column>
+                    <p:toolbar>
+                        <f:facet name="acoes">
+                            <p:menuButton value="Options">
+                                <p:menuitem value="editar" actionListener="#{itemMB.editar}" update="messages" icon="ui-icon-arrowrefresh-1-w" />
+                                <p:menuitem value="deletar" actionListener="#{itemMB.deletar}" ajax="false" icon="ui-icon-close" />
+                            </p:menuButton>
+                        </f:facet>
+                    </p:toolbar>                    
+            </p:dataTable>
+        </p:panelGrid>
+    </h:body>
+</html>
+

@@ -7,7 +7,7 @@
 
     <context-param>
         <param-name>primefaces.THEME</param-name>
-        <param-value>sunny</param-value>
+        <param-value>cruze</param-value>
     </context-param>
 
     <servlet>

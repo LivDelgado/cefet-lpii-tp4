@@ -1,34 +1,30 @@
 package br.cefetmg.inf.hosten.controller.login;
 
 import br.cefetmg.inf.hosten.model.domain.Usuario;
-//import br.cefetmg.inf.hosten.model.service.IManterUsuario;
-//import br.cefetmg.inf.hosten.proxy.ManterUsuarioProxy;
-import javax.inject.Named;
-//import javax.enterprise.context.SessionScoped;
+import br.cefetmg.inf.hosten.model.service.IManterUsuario;
+import br.cefetmg.inf.hosten.proxy.ManterUsuarioProxy;
+import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import javax.faces.bean.ManagedBean;
 
-@Named(value = "loginMB")
-//@SessionScoped
+@ManagedBean(name = "loginMB")
+@SessionScoped
 public class LoginMB implements Serializable {
     
-    private Usuario usuarioLogin;
     private String email;
     private String senha;
 
+    private Usuario usuarioLogin;
+
     public LoginMB() {
-        usuarioLogin = new Usuario();
-        usuarioLogin.setCodCargo("000");
-        usuarioLogin.setCodUsuario("0000");
-        usuarioLogin.setDesEmail("email@email.com");
-        usuarioLogin.setDesSenha("senha");
-        usuarioLogin.setNomUsuario("Usuário");
+        usuarioLogin = new Usuario("000", "0000", "email@email.com", "senha", "Usuário");
     }
     
-    public Usuario getUserLogin() {
+    public Usuario getUsuarioLogin() {
         return usuarioLogin;
     }
 
-    public void setUserLogin(Usuario usuarioLogin) {
+    public void setUsuarioLogin(Usuario usuarioLogin) {
         this.usuarioLogin = usuarioLogin;
     }
 
@@ -48,7 +44,21 @@ public class LoginMB implements Serializable {
         this.senha = senha;
     }
     
-    public void validaLogin () {
+    public String validaLogin () {
+//        System.out.println("validaLogin");
+  
+        IManterUsuario manterUsuario = new ManterUsuarioProxy();
+        try {
+            usuarioLogin = manterUsuario.usuarioLogin(email, senha);
+//            System.out.println(usuarioLogin);
+            if (usuarioLogin != null) {
+                return "sucesso";
+            } else {
+                return "falha";
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return "falha";
+        }
     }
-
 }
