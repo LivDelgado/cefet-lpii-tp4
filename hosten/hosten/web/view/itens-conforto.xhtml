@@ -11,23 +11,28 @@
         <h1>Itens de Conforto</h1>
         <p:panelGrid columns="3">
             <p:dataTable var="item" value="#{itemMB.listaItens}">
-                <p:column headerText="Código">
+                
+                <p:column headerText="Código" style="text-align: center">
                     <h:outputText value="#{item.codItem}"/>
                 </p:column>
-                <p:column headerText="Descrição">
+                
+                <p:column headerText="Descrição" style="text-align: center">
                     <h:outputText value="#{item.desItem}"/>
                 </p:column>
-                <p:column>
+                
+                <p:column headerText="Operações" style="text-align: center">
+                
+                    <p:commandButton type="button" title="Editar" actionListener="#{itemMB.editar}" icon="ui-icon-pencil">
+                        <f:setPropertyActionListener value="#{item}" target="#{itemMB.item}"/>
+                    </p:commandButton>
+                    
+                    <p:commandButton type="button" title="Deletar" actionListener="#{itemMB.deletar}" icon="ui-icon-trash">
+                        <f:setPropertyActionListener value="#{item}" target="#{itemMB.item}" />
+                    </p:commandButton>
+                
                 </p:column>
-                    <p:toolbar>
-                        <f:facet name="acoes">
-                            <p:menuButton value="Options">
-                                <p:menuitem value="editar" actionListener="#{itemMB.editar}" update="messages" icon="ui-icon-arrowrefresh-1-w" />
-                                <p:menuitem value="deletar" actionListener="#{itemMB.deletar}" ajax="false" icon="ui-icon-close" />
-                            </p:menuButton>
-                        </f:facet>
-                    </p:toolbar>                    
             </p:dataTable>
+            <p:commandButton type="button" title="Novo Item" icon="ui-icon-circle-plus"/>
         </p:panelGrid>
     </h:body>
 </html>

@@ -3,18 +3,20 @@ package br.cefetmg.inf.hosten.controller.itemconforto;
 import br.cefetmg.inf.hosten.model.domain.ItemConforto;
 import br.cefetmg.inf.hosten.model.service.IManterItemConforto;
 import br.cefetmg.inf.hosten.proxy.ManterItemConfortoProxy;
+import java.io.Serializable;
 import java.util.List;
-import javax.enterprise.context.Dependent;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 
 @ManagedBean(name = "itemMB")
-@Dependent
-public class ItemConfortoMB {
+@ViewScoped
+public class ItemConfortoMB implements Serializable {
     
     private List<ItemConforto> listaItens;
     private ItemConforto item;
 
     public ItemConfortoMB() {
+        item = null;
         IManterItemConforto manterItem = new ManterItemConfortoProxy();
         try {
             listaItens = manterItem.listarTodos();
@@ -37,4 +39,11 @@ public class ItemConfortoMB {
         return listaItens;
     }
     
+    public void editar () {
+        System.out.println("editar item: " + item.getDesItem());
+    }
+    
+    public void deletar () {
+        System.out.println("editar item: " + item.getDesItem());
+    }
 }
