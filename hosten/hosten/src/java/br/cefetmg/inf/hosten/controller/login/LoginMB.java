@@ -1,5 +1,7 @@
 package br.cefetmg.inf.hosten.controller.login;
 
+import br.cefetmg.inf.hosten.controller.sessao.ConstantesSessao;
+import br.cefetmg.inf.hosten.controller.sessao.Sessao;
 import br.cefetmg.inf.hosten.model.domain.Usuario;
 import br.cefetmg.inf.hosten.model.service.IManterUsuario;
 import br.cefetmg.inf.hosten.proxy.ManterUsuarioProxy;
@@ -13,20 +15,6 @@ public class LoginMB implements Serializable {
     
     private String email;
     private String senha;
-
-    private Usuario usuarioLogin;
-
-    public LoginMB() {
-        usuarioLogin = new Usuario("000", "0000", "email@email.com", "senha", "Usuário");
-    }
-    
-    public Usuario getUsuarioLogin() {
-        return usuarioLogin;
-    }
-
-    public void setUsuarioLogin(Usuario usuarioLogin) {
-        this.usuarioLogin = usuarioLogin;
-    }
 
     public String getEmail() {
         return email;
@@ -47,14 +35,25 @@ public class LoginMB implements Serializable {
     public String validaLogin () {
         IManterUsuario manterUsuario = new ManterUsuarioProxy();
         try {
-            usuarioLogin = manterUsuario.usuarioLogin(email, senha);
-            if (usuarioLogin != null) {
+            Usuario usuarioAtual = manterUsuario.usuarioLogin(email, senha);
+            if (usuarioAtual != null) {
+                Sessao.getInstance().setAtributo(ConstantesSessao.USUARIO_LOGADO, usuarioAtual);
                 return "sucesso";
             } else {
                 return "falha";
             }
         } catch (Exception ex) {
             ex.printStackTrace();
+            return "falha";
+        }
+    }
+    
+    public String efetuaLogout() {
+        try {
+            Sessao.getInstance().encerrarSessao();
+            return "sucesso";
+        } catch(Exception e) {
+            // TODO
             return "falha";
         }
     }
