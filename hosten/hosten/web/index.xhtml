@@ -8,21 +8,28 @@
         <title>Hosten</title>
     </h:head>
     <h:body>
-        <h3>Login</h3>
         <h:form>
-            <p:panelGrid columns="3">
-                <h:outputLabel for="emailLogin" value="Email" />
-                <p:inputText id="emailLogin" value="#{loginMB.email}" required="true" validatorMessage="Email inválido">
-                    <f:validateRegex 
-                        pattern="/^(([^()\[\]\\.,;:\s@']+(\.[^()\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/" />
-                </p:inputText>
-                <p:message for="emailLogin"/>
-                
-                <h:outputLabel for="senhaLogin" value="Senha" />
-                <p:password id="senhaLogin" value="#{loginMB.senha}" required="true" />
-                
-                <p:commandButton value="Login" validateClient="true" action="#{loginMB.validaLogin}"/>
-            </p:panelGrid>
+            <div align="center">
+                <p:panelGrid columns="3" style="text-align:right">
+                    <f:facet name="header">
+                        <h:outputText value="Login" style="font-size:25px"/>
+                    </f:facet>
+
+                    <h:outputLabel for="emailLogin" value="Email" />
+                    <p:inputText id="emailLogin" value="#{loginMB.email}" required="true" requiredMessage="Campo obrigatório" validatorMessage="Email inválido">
+                        <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+                    </p:inputText>
+                    <p:message for="emailLogin"/>
+
+                    <h:outputLabel for="senhaLogin" value="Senha" />
+                    <p:password id="senhaLogin" value="#{loginMB.senha}" required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="senhaLogin"/>
+
+                    <h:outputLabel value="" />
+                    <p:commandButton value="Login" action="#{loginMB.validaLogin}" ajax="false"/>
+                    <h:outputLabel value="" />
+                </p:panelGrid>
+            </div>
         </h:form>
     </h:body>
 </html>
