@@ -27,13 +27,20 @@
     </servlet-mapping>
 
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout> 30 </session-timeout>
     </session-config>
 
     <welcome-file-list>
         <welcome-file>index.jsf</welcome-file>
     </welcome-file-list>
-
+    
+    <!--  Filtro de Login -->
+    <filter>
+        <filter-name>FiltroLogin</filter-name>
+        <filter-class>br.cefetmg.inf.hosten.controller.login.FiltroLogin</filter-class>    
+    </filter>
+    <filter-mapping>
+        <filter-name>FiltroLogin</filter-name>
+        <url-pattern>/restricted/*</url-pattern>
+    </filter-mapping>
 </web-app>
