@@ -13,70 +13,80 @@
         <ui:composition template="../template.xhtml">
 
             <ui:define name="content">
-                <p:panelGrid columns="3">
-                    <f:facet name="header">
-                        <h:outputText value="Itens de Conforto" style="font-size: 25px"/>
-                    </f:facet>
-                    <h:form id="formData"> 
+                
+                <h:form id="form"> 
+                    <p:growl id="msgs" showDetail="true"/>
+                    <p:dataTable var="item" value="#{itemMB.listaItens}" editable="true">
+                        <f:facet name="header">
+                            <h:outputText value="Itens de Conforto" style="font-size: 25px"/>
+                        </f:facet>
 
-                        <p:dataTable var="item" value="#{itemMB.listaItens}">
+                        <p:ajax event="rowEdit" listener="#{itemMB.onRowEdit}" update=":form:msgs" />
+                        <p:ajax event="rowEditCancel" listener="#{itemMB.onRowCancel}" update=":form:msgs" />
 
-                            <p:column headerText="Código" sortBy="#{item.codItem}" filterBy="#{item.codItem}" filterStyle="width: 300px" style="text-align: center">
-                                <h:outputText value="#{item.codItem}"/>
-                            </p:column>
+                        <p:column headerText="Código" sortBy="#{item.codItem}" filterBy="#{item.codItem}" filterStyle="width: 80%" style="text-align: center">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{item.codItem}"/></f:facet>
+                                <f:facet name="input"><p:inputText value="#{item.codItem}" style="width: 77%" label="TesteOqEhLabel"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
 
-                            <p:column headerText="Descrição" sortBy="#{item.desItem}" filterBy="#{item.desItem}" filterStyle="width: 300px" style="text-align: center">
-                                <h:outputText value="#{item.desItem}"/>
-                            </p:column>
+                        <p:column headerText="Descrição" sortBy="#{item.desItem}" filterBy="#{item.desItem}" filterStyle="width: 80%" style="text-align: center">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{item.desItem}"/></f:facet>
+                                <f:facet name="input"><p:inputText value="#{item.desItem}" style="width: 77%" label="TesteOqdesItem"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
 
-                            <p:column headerText="Operações" style="text-align: center">
+                        <p:column headerText="Editar" style="width: 55px">
+                            <p:rowEditor />
+                        </p:column>
 
-                                <h:form>
-                                    <p:commandButton type="button" title="Editar" actionListener="#{itemMB.editar}" icon="ui-icon-pencil">
-                                        <f:setPropertyActionListener value="#{item}" target="#{itemMB.item}"/>
-                                    </p:commandButton>
+                        <p:column headerText="Excluir" style="text-align: center; width: 55px">
 
-                                    <p:growl id="message" showDetail="true" />
+                            <h:form>
+                                <p:growl id="message" showDetail="true" />
 
-                                    <p:commandButton title="Excluir" icon="ui-icon-trash" actionListener="#{itemMB.excluir(item)}">
-                                        <p:confirm header="Confirmação" message="Deseja realmente excluir o registro?" icon="ui-icon-alert" />
-                                    </p:commandButton>
+                                <p:commandButton title="Excluir" icon="ui-icon-trash" actionListener="#{itemMB.excluir(item)}">
+                                    <p:confirm header="Confirmação" message="Deseja realmente excluir o registro?" icon="ui-icon-alert" />
+                                </p:commandButton>
 
-                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                        <p:commandButton value="Excluir" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                                        <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                                    </p:confirmDialog>
-                                </h:form>
+                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                    <p:commandButton value="Excluir" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                    <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                </p:confirmDialog>
+                            </h:form>
 
-                            </p:column>
-                        </p:dataTable>
-                    </h:form>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+                
+                <h:form>
+                    <h:panelGrid columns="1" cellpadding="5">
+                        <p:commandButton title="Novo Item" icon="ui-icon-circle-plus" type="button" onclick="PF('modalInsercao').show();" />
+                    </h:panelGrid>
+                </h:form>
+
+                <p:dialog header="Inserir" widgetVar="modalInsercao" minHeight="40">
                     <h:form>
-                        <h:panelGrid columns="1" cellpadding="5">
-                            <p:commandButton title="Novo Item" icon="ui-icon-circle-plus" type="button" onclick="PF('modalInsercao').show();" />
-                        </h:panelGrid>
+                        <p:panelGrid columns="3">
+                            <h:outputLabel for="codItem" value="Código" />
+                            <p:inputText id="codItem" value="#{itemMB.item.codItem}" required="true" requiredMessage="Campo obrigatório" validatorMessage="Código inválido">
+                                <f:validateLength minimum="3" maximum="3"/>
+                            </p:inputText>
+                            <p:message for="codItem"/>
+
+                            <h:outputLabel for="desItem" value="Descrição" />
+                            <p:inputText id="desItem" value="#{itemMB.item.desItem}" required="true" requiredMessage="Campo obrigatório" validatorMessage="Descrição inválida">
+                                <f:validateLength maximum="40"/>
+                            </p:inputText>
+                            <p:message for="desItem"/>
+
+                            <p:commandButton value="Inserir" action="#{itemMB.inserir}" onclick="PF('modalInsercao').hide();"/>
+                        </p:panelGrid>
                     </h:form>
-
-                    <p:dialog header="Inserir" widgetVar="modalInsercao" minHeight="40">
-                        <h:form>
-                            <p:panelGrid columns="3">
-                                <h:outputLabel for="codItem" value="Código" />
-                                <p:inputText id="codItem" value="#{itemMB.item.codItem}" required="true" requiredMessage="Campo obrigatório" validatorMessage="Código inválido">
-                                    <f:validateLength minimum="3" maximum="3"/>
-                                </p:inputText>
-                                <p:message for="codItem"/>
-
-                                <h:outputLabel for="desItem" value="Descrição" />
-                                <p:inputText id="desItem" value="#{itemMB.item.desItem}" required="true" requiredMessage="Campo obrigatório" validatorMessage="Descrição inválida">
-                                    <f:validateLength maximum="40"/>
-                                </p:inputText>
-                                <p:message for="desItem"/>
-
-                                <p:commandButton value="Inserir" action="#{itemMB.inserir}" onclick="PF('modalInsercao').hide();"/>
-                            </p:panelGrid>
-                        </h:form>
-                    </p:dialog>
-                </p:panelGrid>
+                </p:dialog>
+             
             </ui:define>
 
         </ui:composition>

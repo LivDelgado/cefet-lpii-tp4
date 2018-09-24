@@ -5,8 +5,11 @@ import br.cefetmg.inf.hosten.model.service.IManterItemConforto;
 import br.cefetmg.inf.hosten.proxy.ManterItemConfortoProxy;
 import java.io.Serializable;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import org.primefaces.event.RowEditEvent;
 
 @ManagedBean(name = "itemMB")
 @ViewScoped
@@ -39,10 +42,16 @@ public class ItemConfortoMB implements Serializable {
         return listaItens;
     }
     
-    public void editar () {
-        System.out.println("editar item: " + item.getDesItem());
+    public void onRowEdit(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Item de Conforto Editado", ((ItemConforto) event.getObject()).getCodItem());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
+    public void onRowCancel(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Edição Cancelada", ((ItemConforto) event.getObject()).getCodItem());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+        
     public String excluir (ItemConforto item) {
         IManterItemConforto manterItem = new ManterItemConfortoProxy();
         try {
@@ -57,7 +66,7 @@ public class ItemConfortoMB implements Serializable {
         }
         
     }
-    
+            
     public String inserir () {
         IManterItemConforto manterItem = new ManterItemConfortoProxy();
         try {
