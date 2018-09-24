@@ -16,7 +16,7 @@ public class ItemConfortoMB implements Serializable {
     private ItemConforto item;
 
     public ItemConfortoMB() {
-        item = null;
+        item = new ItemConforto(null, null);
         IManterItemConforto manterItem = new ManterItemConfortoProxy();
         try {
             listaItens = manterItem.listarTodos();
@@ -43,7 +43,34 @@ public class ItemConfortoMB implements Serializable {
         System.out.println("editar item: " + item.getDesItem());
     }
     
-    public void deletar () {
-        System.out.println("editar item: " + item.getDesItem());
+    public String excluir (ItemConforto item) {
+        IManterItemConforto manterItem = new ManterItemConfortoProxy();
+        try {
+            boolean testeExclusao = manterItem.excluir(item.getCodItem());
+            if (testeExclusao) {
+                return "sucesso";
+            } else {
+                return "falha";
+            }
+        } catch (Exception ex) {
+            return "falha";
+        }
+        
     }
+    
+    public String inserir () {
+        IManterItemConforto manterItem = new ManterItemConfortoProxy();
+        try {
+            boolean testeInsercao = manterItem.inserir(item);
+            if (testeInsercao) {
+                return "sucesso";
+            } else {
+                return "falha";
+            }
+        } catch (Exception ex) {
+            return "falha";
+        }
+        
+    }
+
 }
