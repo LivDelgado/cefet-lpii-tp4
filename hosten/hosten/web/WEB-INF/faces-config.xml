@@ -17,13 +17,13 @@
         </navigation-case>
 
         <navigation-case>
-            <from-action>#{itemMB.excluir}</from-action>
+            <from-action>#{itemMB.excluir(item)}</from-action>
             <from-outcome>falha</from-outcome>
             <to-view-id>/view/itens-conforto.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>
-            <from-action>#{itemMB.excluir}</from-action>
+            <from-action>#{itemMB.excluir(item)}</from-action>
             <from-outcome>sucesso</from-outcome>
             <to-view-id>/view/itens-conforto.xhtml</to-view-id>
             <redirect/>

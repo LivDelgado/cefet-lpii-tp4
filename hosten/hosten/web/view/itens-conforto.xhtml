@@ -14,15 +14,16 @@
 
             <ui:define name="content">
                 
-                <h:form id="form"> 
+                <h:form id="formRegistro"> 
                     <p:growl id="msgs" showDetail="true"/>
-                    <p:dataTable var="item" value="#{itemMB.listaItens}" editable="true">
+                    
+                    <p:dataTable id="registros" var="item" value="#{itemMB.listaItens}" editable="true">
                         <f:facet name="header">
                             <h:outputText value="Itens de Conforto" style="font-size: 25px"/>
                         </f:facet>
 
-                        <p:ajax event="rowEdit" listener="#{itemMB.onRowEdit}" update=":form:msgs" />
-                        <p:ajax event="rowEditCancel" listener="#{itemMB.onRowCancel}" update=":form:msgs" />
+                        <p:ajax event="rowEdit" listener="#{itemMB.onRowEdit}" update=":formRegistro:msgs" />
+                        <p:ajax event="rowEditCancel" listener="#{itemMB.onRowCancel}" update=":formRegistro:msgs" />
 
                         <p:column headerText="Código" sortBy="#{item.codItem}" filterBy="#{item.codItem}" filterStyle="width: 80%" style="text-align: center">
                             <p:cellEditor>
@@ -44,18 +45,14 @@
 
                         <p:column headerText="Excluir" style="text-align: center; width: 55px">
 
-                            <h:form>
-                                <p:growl id="message" showDetail="true" />
+                            <p:commandButton title="Excluir" icon="ui-icon-trash" action="#{itemMB.excluir(item)}" update=":formRegistro:msgs">
+                                <p:confirm header="Confirmação" message="Deseja realmente excluir o registro?" icon="ui-icon-alert" />
+                            </p:commandButton>
 
-                                <p:commandButton title="Excluir" icon="ui-icon-trash" actionListener="#{itemMB.excluir(item)}">
-                                    <p:confirm header="Confirmação" message="Deseja realmente excluir o registro?" icon="ui-icon-alert" />
-                                </p:commandButton>
-
-                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                    <p:commandButton value="Excluir" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                                    <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                                </p:confirmDialog>
-                            </h:form>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Excluir" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
 
                         </p:column>
                     </p:dataTable>
@@ -69,6 +66,8 @@
 
                 <p:dialog header="Inserir" widgetVar="modalInsercao" minHeight="40">
                     <h:form>
+                        <p:growl id="msgi" showDetail="true"/>
+
                         <p:panelGrid columns="3">
                             <h:outputLabel for="codItem" value="Código" />
                             <p:inputText id="codItem" value="#{itemMB.item.codItem}" required="true" requiredMessage="Campo obrigatório" validatorMessage="Código inválido">
@@ -82,7 +81,7 @@
                             </p:inputText>
                             <p:message for="desItem"/>
 
-                            <p:commandButton value="Inserir" action="#{itemMB.inserir}" onclick="PF('modalInsercao').hide();"/>
+                            <p:commandButton value="Inserir" action="#{itemMB.inserir}" onclick="PF('modalInsercao').hide();" update="msgi"/>
                         </p:panelGrid>
                     </h:form>
                 </p:dialog>

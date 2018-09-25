@@ -53,33 +53,47 @@ public class ItemConfortoMB implements Serializable {
     }
         
     public String excluir (ItemConforto item) {
+        this.item = item;
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getFlash().setKeepMessages(true);
+
         IManterItemConforto manterItem = new ManterItemConfortoProxy();
+        
         try {
             boolean testeExclusao = manterItem.excluir(item.getCodItem());
             if (testeExclusao) {
+                context.addMessage(null, new FacesMessage("Registro excluído com sucesso!"));
                 return "sucesso";
             } else {
+                context.addMessage(null, new FacesMessage("Falha ao excluir o registro!"));
                 return "falha";
             }
         } catch (Exception ex) {
+            context.addMessage(null, new FacesMessage(ex.getMessage()));
             return "falha";
         }
         
     }
             
     public String inserir () {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getFlash().setKeepMessages(true);
+
         IManterItemConforto manterItem = new ManterItemConfortoProxy();
+        
         try {
             boolean testeInsercao = manterItem.inserir(item);
             if (testeInsercao) {
+                context.addMessage(null, new FacesMessage("Registro inserido com sucesso!"));
                 return "sucesso";
             } else {
+                context.addMessage(null, new FacesMessage("Falha ao inserir o registro!"));
                 return "falha";
             }
         } catch (Exception ex) {
+            context.addMessage(null, new FacesMessage(ex.getMessage()));
             return "falha";
-        }
-        
+        }  
     }
 
 }
