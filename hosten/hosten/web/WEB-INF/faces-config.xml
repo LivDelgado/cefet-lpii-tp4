@@ -6,15 +6,14 @@
     <navigation-rule>
         <navigation-case>
             <from-action>#{loginMB.validaLogin}</from-action>
-            <from-outcome>falha</from-outcome>
-            <to-view-id>/index.xhtml</to-view-id>
+            <from-outcome>true</from-outcome>
+            <to-view-id>/view/itens-conforto.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>
             <from-action>#{loginMB.validaLogin}</from-action>
-            <from-outcome>sucesso</from-outcome>
-            <to-view-id>/view/itens-conforto.xhtml</to-view-id>
-            <redirect/>
+            <from-outcome>false</from-outcome>
+            <to-view-id>index.xhtml</to-view-id>
         </navigation-case>
 
         <navigation-case>

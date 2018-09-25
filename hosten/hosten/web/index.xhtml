@@ -8,7 +8,9 @@
         <title>Hosten</title>
     </h:head>
     <h:body>
+
         <h:form>
+            <p:growl id="mensagens" showDetail="true" sticky="true" />  
             <div align="center">
                 <p:panelGrid columns="3" style="text-align: right">
                     <f:facet name="header">
@@ -26,7 +28,7 @@
                     <p:message for="senhaLogin"/>
 
                     <h:outputLabel value="" />
-                    <p:commandButton value="Login" action="#{loginMB.validaLogin}" ajax="false"/>
+                    <p:commandButton value="Login" action="#{loginMB.validaLogin}" update="mensagens"/>
                     <h:outputLabel value="" />
                 </p:panelGrid>
             </div>

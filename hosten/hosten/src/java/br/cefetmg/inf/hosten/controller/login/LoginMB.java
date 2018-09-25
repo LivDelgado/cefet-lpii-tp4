@@ -7,7 +7,9 @@ import br.cefetmg.inf.hosten.model.service.IManterUsuario;
 import br.cefetmg.inf.hosten.proxy.ManterUsuarioProxy;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 
 @ManagedBean(name = "loginMB")
 @SessionScoped
@@ -32,20 +34,30 @@ public class LoginMB implements Serializable {
         this.senha = senha;
     }
     
-    public String validaLogin () {
+    public boolean validaLogin () {
+        boolean retorno = false;
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getFlash().setKeepMessages(true);
+        
         IManterUsuario manterUsuario = new ManterUsuarioProxy();
         try {
             Usuario usuarioAtual = manterUsuario.usuarioLogin(email, senha);
             if (usuarioAtual != null) {
                 Sessao.getInstance().setAtributo(ConstantesSessao.USUARIO_LOGADO, usuarioAtual);
-                return "sucesso";
+                
+                retorno = true;
+                
             } else {
-                return "falha";
+                context.addMessage(null, new FacesMessage("Tentativa de login inválida. Tente novamente."));
             }
         } catch (Exception ex) {
+            context.addMessage(null, new FacesMessage("Tentativa de login inválida. Tente novamente."));
+
             ex.printStackTrace();
-            return "falha";
+            return retorno;
         }
+        return retorno;
     }
     
     public String efetuaLogout() {
