@@ -43,8 +43,28 @@ public class ItemConfortoMB implements Serializable {
     }
     
     public void onRowEdit(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Item de Conforto Editado", ((ItemConforto) event.getObject()).getCodItem());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        String codItemAlterar = (String) event.getComponent().getAttributes().get("itemEditar");
+        
+        System.out.println("código do item a alterar: " + codItemAlterar);
+        
+        item = (ItemConforto) event.getObject();
+        
+        IManterItemConforto manterItem = new ManterItemConfortoProxy();
+        try {
+            boolean testeExclusao = manterItem.alterar(codItemAlterar, item);
+            if (testeExclusao) {
+                context.addMessage(null, new FacesMessage("Registro alterado com sucesso!"));
+                return;
+            } else {
+                context.addMessage(null, new FacesMessage("Falha ao alterar o registro!"));
+                return;
+            }
+        } catch (Exception ex) {
+            context.addMessage(null, new FacesMessage(ex.getMessage()));
+            return;
+        }
     }
     
     public void onRowCancel(RowEditEvent event) {

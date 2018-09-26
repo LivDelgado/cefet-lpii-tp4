@@ -13,15 +13,16 @@
         <ui:composition template="../template.xhtml">
 
             <ui:define name="content">
-                
+
                 <h:form id="formRegistro"> 
                     <p:growl id="msgs" showDetail="true"/>
-                    
+
                     <p:dataTable id="registros" var="item" value="#{itemMB.listaItens}" editable="true">
                         <f:facet name="header">
                             <h:outputText value="Itens de Conforto" style="font-size: 25px"/>
                         </f:facet>
 
+                        <f:attribute name="itemEditar" value="#{item.codItem}" />
                         <p:ajax event="rowEdit" listener="#{itemMB.onRowEdit}" update=":formRegistro:msgs" />
                         <p:ajax event="rowEditCancel" listener="#{itemMB.onRowCancel}" update=":formRegistro:msgs" />
 
@@ -57,7 +58,7 @@
                         </p:column>
                     </p:dataTable>
                 </h:form>
-                
+
                 <h:form>
                     <h:panelGrid columns="1" cellpadding="5">
                         <p:commandButton title="Novo Item" icon="ui-icon-circle-plus" type="button" onclick="PF('modalInsercao').show();" />
@@ -68,24 +69,30 @@
                     <h:form>
                         <p:growl id="msgi" showDetail="true"/>
 
-                        <p:panelGrid columns="3">
+                        <p:panelGrid columns="2">
                             <h:outputLabel for="codItem" value="Código" />
-                            <p:inputText id="codItem" value="#{itemMB.item.codItem}" required="true" requiredMessage="Campo obrigatório" validatorMessage="Código inválido">
+                            <p:inputText id="codItem" value="#{itemMB.item.codItem}" required="true" 
+                                         requiredMessage="Campo obrigatório" validatorMessage="Código inválido" 
+                                         title="Código de 3 caracteres">
                                 <f:validateLength minimum="3" maximum="3"/>
                             </p:inputText>
+                            <p:tooltip id="codItemTip" for="codItem" showEvent="focus" hideEvent="blur" />
                             <p:message for="codItem"/>
 
                             <h:outputLabel for="desItem" value="Descrição" />
-                            <p:inputText id="desItem" value="#{itemMB.item.desItem}" required="true" requiredMessage="Campo obrigatório" validatorMessage="Descrição inválida">
+                            <p:inputText id="desItem" value="#{itemMB.item.desItem}" required="true" 
+                                         requiredMessage="Campo obrigatório" validatorMessage="Descrição inválida"
+                                         title="Descrição do item com máximo de 40 caracteres">
                                 <f:validateLength maximum="40"/>
                             </p:inputText>
+                            <p:tooltip id="desItemTip" for="desItem" showEvent="focus" hideEvent="blur" />
                             <p:message for="desItem"/>
 
                             <p:commandButton value="Inserir" action="#{itemMB.inserir}" onclick="PF('modalInsercao').hide();" update="msgi"/>
                         </p:panelGrid>
                     </h:form>
                 </p:dialog>
-             
+
             </ui:define>
 
         </ui:composition>
