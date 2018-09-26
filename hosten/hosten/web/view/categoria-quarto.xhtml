@@ -3,39 +3,127 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core" >
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <title>Hosten - Categorias de Quarto</title>
     </h:head>
     <h:body>
-        <p:panelGrid columns="3">
-            <p:dataTable var="ctgQrt" value="#{categoriaMB.listaCtgs}">
-                
-                <p:column headerText="Código" style="text-align: center">
-                    <h:outputText value="#{ctgQrt.codCategoria}"/>
-                </p:column>
-                
-                <p:column headerText="Nome da Categoria" style="text-align: center">
-                    <h:outputText value="#{ctgQrt.nomCategoria}"/>
-                </p:column>
 
-                <p:column headerText="Valor da Diária" style="text-align: center">
-                    <h:outputText value="#{ctgQrt.vlrDiaria}"/>
-                </p:column>
-                
-                <p:column headerText="Operações" style="text-align: center">
-                
-                    <p:commandButton type="button" title="Editar" actionListener="#{categoriaMB.editar}" icon="ui-icon-pencil">
-                        <f:setPropertyActionListener value="#{ctgQrt}" target="#{categoriaMB.ctg}"/>
-                    </p:commandButton>
-                    
-                    <p:commandButton type="button" title="Deletar" actionListener="#{categoriaMB.deletar}" icon="ui-icon-trash">
-                        <f:setPropertyActionListener value="#{ctgQrt}" target="#{categoriaMB.ctg}" />
-                    </p:commandButton>    
-                </p:column>
-            </p:dataTable>
+        <ui:composition template="../template.xhtml">
 
-            <p:commandButton type="button" title="Nova Categoria de Quarto" icon="ui-icon-circle-plus"/>
-        </p:panelGrid> 
+            <ui:define name="content">
+
+                <h:form id="formRegistro"> 
+                    <p:growl id="msgs" showDetail="true"/>
+
+                    <p:dataTable id="registros" var="categoria" value="#{categoriaMB.listaCategorias}" editable="true">
+                        <f:facet name="header">
+                            <h:outputText value="Categorias de Quarto" style="font-size: 25px"/>
+                        </f:facet>
+
+                        <f:attribute name="categoriaEditar" value="#{categoria.codCategoria}" />
+                        <p:ajax event="rowEdit" listener="#{categoriaMB.onRowEdit}" update=":formRegistro:msgs" />
+                        <p:ajax event="rowEditCancel" listener="#{categoriaMB.onRowCancel}" update=":formRegistro:msgs" />
+
+                        <p:column headerText="Código" sortBy="#{categoria.codCategoria}" filterBy="#{categoria.codCategoria}" filterStyle="width: 80%" style="text-align: center">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{categoria.codCategoria}"/></f:facet>
+                                <f:facet name="input"><p:inputText value="#{categoria.codCategoria}" style="width: 77%"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Nome" sortBy="#{categoria.nomCategoria}" filterBy="#{categoria.nomCategoria}" filterStyle="width: 80%" style="text-align: center">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{categoria.nomCategoria}"/></f:facet>
+                                <f:facet name="input"><p:inputText value="#{categoria.nomCategoria}" style="width: 77%"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Valor da diária" sortBy="#{categoria.vlrDiaria}" filterBy="#{categoria.vlrDiaria}" filterStyle="width: 80%" style="text-align: center">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{categoria.vlrDiaria}"/></f:facet>
+                                <f:facet name="input"><p:inputText value="#{categoria.vlrDiaria}" style="width: 77%"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Itens de conforto" style="text-align: center">
+                            <p:cellEditor>
+<!--                                <f:facet name="output"><h:outputText value="#{categoria.listaItensRelacionados}"/></f:facet>
+                                <f:facet name="input"><p:inputText value="#{itemMB.listaItens}" style="width: 77%"/></f:facet>-->
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Editar" style="width: 55px">
+                            <p:rowEditor />
+                        </p:column>
+
+                        <p:column headerText="Excluir" style="text-align: center; width: 55px">
+
+                            <p:commandButton title="Excluir" icon="ui-icon-trash" action="#{categoriaMB.excluir(categoria)}" update=":formRegistro:msgs">
+                                <p:confirm header="Confirmação" message="Deseja realmente excluir o registro?" icon="ui-icon-alert" />
+                            </p:commandButton>
+
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Excluir" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+
+                <h:form>
+                    <h:panelGrid columns="1" cellpadding="5">
+                        <p:commandButton title="Novo Categoria" icon="ui-icon-circle-plus" type="button" onclick="PF('modalInsercao').show();" />
+                    </h:panelGrid>
+                </h:form>
+
+                <p:dialog header="Inserir" widgetVar="modalInsercao" minHeight="40">
+                    <h:form>
+                        <p:growl id="msgi" showDetail="true"/>
+
+                        <p:panelGrid columns="2">
+                            <h:outputLabel for="codCategoria" value="Código" />
+                            <p:inputText id="codCategoria" value="#{categoriaMB.categoria.codCategoria}" required="true" 
+                                         requiredMessage="Campo obrigatório" validatorMessage="Código inválido" 
+                                         title="Código de 3 caracteres">
+                                <f:validateLength minimum="3" maximum="3"/>
+                            </p:inputText>
+                            <p:tooltip id="codCategoriaTip" for="codCategoria" showEvent="focus" hideEvent="blur" />
+                            <p:message for="codCategoria"/>
+
+                            <h:outputLabel for="nomCategoria" value="Nome" />
+                            <p:inputText id="nomCategoria" value="#{categoriaMB.categoria.nomCategoria}" required="true" 
+                                         requiredMessage="Campo obrigatório" validatorMessage="Nome inválido"
+                                         title="Nome da categoria com máximo de 40 caracteres">
+                                <f:validateLength maximum="40"/>
+                            </p:inputText>
+                            <p:tooltip id="nomCategoriaTip" for="nomCategoria" showEvent="focus" hideEvent="blur" />
+                            <p:message for="nomCategoria"/>
+
+                            <h:outputLabel for="vlrDiaria" value="Valor da diária" />
+                            <p:inputNumber id="vlrDiaria" value="#{categoriaMB.categoria.vlrDiaria}" required="true" 
+                                           requiredMessage="Campo obrigatório" validatorMessage="Valor inválido" 
+                                           title="Quantia de no máximo R$99.999,99">
+                                <f:validateDoubleRange minimum="0" maximum="99999.99" />
+                            </p:inputNumber>
+                            <p:tooltip id="vlrDiariaTip" for="vlrDiaria" showEvent="focus" hideEvent="blur" />
+                            <p:message for="vlrDiaria"/>
+
+                            <h:outputLabel for="itens" value="Itens de conforto" />
+                            <p:selectCheckboxMenu id="itens" value="#{categoriaMB.itensSelecionados}" label="Itens" 
+                                                  filter="true" filterMatchMode="startsWith" panelStyle="width:250px"
+                                                  multiple="true" >
+                                <f:selectItems value="#{itemMB.listaItens}" var="item" itemLabel="#{item.desItem}" itemValue="#{item}"/>
+                            </p:selectCheckboxMenu>
+
+                            <p:commandButton value="Inserir" action="#{categoriaMB.inserir}" onclick="PF('modalInsercao').hide();" update="msgi"/>
+                        </p:panelGrid>
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>
+

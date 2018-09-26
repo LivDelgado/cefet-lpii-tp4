@@ -40,5 +40,32 @@
             <to-view-id>/view/itens-conforto.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+
+
+
+        <navigation-case>
+            <from-action>#{categoriaMB.excluir(categoria)}</from-action>
+            <from-outcome>falha</from-outcome>
+            <to-view-id>/view/categoria-quarto.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{categoriaMB.excluir(categoria)}</from-action>
+            <from-outcome>sucesso</from-outcome>
+            <to-view-id>/view/categoria-quarto.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{categoriaMB.inserir}</from-action>
+            <from-outcome>falha</from-outcome>
+            <to-view-id>/view/categoria-quarto.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{categoriaMB.inserir}</from-action>
+            <from-outcome>sucesso</from-outcome>
+            <to-view-id>/view/categoria-quarto.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
 </faces-config>
