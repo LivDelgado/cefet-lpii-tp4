@@ -3,6 +3,7 @@ package br.cefetmg.inf.hosten.controller.itemconforto;
 import br.cefetmg.inf.hosten.model.domain.ItemConforto;
 import br.cefetmg.inf.hosten.model.service.IManterItemConforto;
 import br.cefetmg.inf.hosten.proxy.ManterItemConfortoProxy;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -17,6 +18,7 @@ public class ItemConfortoMB implements Serializable {
     
     private List<ItemConforto> listaItens;
     private ItemConforto item;
+    private String codItemAlterar;
 
     public ItemConfortoMB() {
         item = new ItemConforto(null, null);
@@ -42,12 +44,13 @@ public class ItemConfortoMB implements Serializable {
         return listaItens;
     }
     
-    public void onRowEdit(RowEditEvent event) {
+    public void onRowInit(RowEditEvent event) {
+        codItemAlterar = (String) event.getComponent().getAttributes().get("itemEditar");           
+    }
+    
+    public void onRowEdit(RowEditEvent event) throws IOException {
         FacesContext context = FacesContext.getCurrentInstance();
-
-        String codItemAlterar = (String) event.getComponent().getAttributes().get("itemEditar");
-        
-        System.out.println("código do item a alterar: " + codItemAlterar);
+        context.getExternalContext().getFlash().setKeepMessages(true);
         
         item = (ItemConforto) event.getObject();
         
@@ -63,6 +66,7 @@ public class ItemConfortoMB implements Serializable {
             }
         } catch (Exception ex) {
             context.addMessage(null, new FacesMessage(ex.getMessage()));
+            FacesContext.getCurrentInstance().getExternalContext().redirect("itens-conforto.jsf");
             return;
         }
     }
