@@ -12,7 +12,7 @@
         <h:form>
             <p:growl id="mensagens" showDetail="true" sticky="true" />  
             <div align="center">
-                <p:panelGrid columns="3" style="text-align: right">
+                <p:panelGrid columns="2" style="text-align: right">
                     <f:facet name="header">
                         <h:outputText value="Login" style="font-size: 25px"/>
                     </f:facet>
@@ -21,15 +21,12 @@
                     <p:inputText id="emailLogin" value="#{loginMB.email}" required="true" requiredMessage="Campo obrigatório" validatorMessage="Email inválido">
                         <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
                     </p:inputText>
-                    <p:message for="emailLogin"/>
-
+                   
                     <h:outputLabel for="senhaLogin" value="Senha" />
                     <p:password id="senhaLogin" value="#{loginMB.senha}" required="true" requiredMessage="Campo obrigatório"/>
-                    <p:message for="senhaLogin"/>
-
+                    
                     <h:outputLabel value="" />
-                    <p:commandButton value="Login" action="#{loginMB.validaLogin}" update="mensagens"/>
-                    <h:outputLabel value="" />
+                    <p:commandButton value="Login" action="#{loginMB.validaLogin}" update="mensagens"/> 
                 </p:panelGrid>
             </div>
         </h:form>
