@@ -41,8 +41,6 @@
             <redirect/>
         </navigation-case>
 
-
-
         <navigation-case>
             <from-action>#{categoriaMB.excluir(categoria)}</from-action>
             <from-outcome>falha</from-outcome>

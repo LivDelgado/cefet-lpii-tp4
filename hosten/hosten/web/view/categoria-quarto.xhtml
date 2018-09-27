@@ -104,17 +104,17 @@
 
                             <h:outputLabel for="vlrDiaria" value="Valor da diária" />
                             <p:inputNumber id="vlrDiaria" value="#{categoriaMB.categoria.vlrDiaria}" required="true" 
-                                           requiredMessage="Campo obrigatório" validatorMessage="Valor inválido" 
+                                           requiredMessage="Campo obrigatório" validatorMessage="Valor da diária inválido" 
                                            title="Quantia de no máximo R$99.999,99">
-                                <f:validateDoubleRange minimum="0" maximum="99999.99" />
+                                <f:validateDoubleRange minimum="0.00" maximum="99999.99" />
                             </p:inputNumber>
                             <p:tooltip id="vlrDiariaTip" for="vlrDiaria" showEvent="focus" hideEvent="blur" />
                             <p:message for="vlrDiaria"/>
 
                             <h:outputLabel for="itens" value="Itens de conforto" />
                             <p:selectCheckboxMenu id="itens" value="#{categoriaMB.itensSelecionados}" label="Itens" 
-                                                  filter="true" filterMatchMode="startsWith" panelStyle="width:250px"
-                                                  multiple="true" >
+                                                  filter="true" filterMatchMode="startsWith" panelStyle="width:250px" converter="itemConfortoConverter"
+                                                  multiple="true">
                                 <f:selectItems value="#{itemMB.listaItens}" var="item" itemLabel="#{item.desItem}" itemValue="#{item}"/>
                             </p:selectCheckboxMenu>
 

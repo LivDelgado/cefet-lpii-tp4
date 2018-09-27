@@ -1,4 +1,4 @@
-package br.cefetmg.inf.hosten.controller.categoriaconforto;
+package br.cefetmg.inf.hosten.controller.categoriaquarto;
 
 import br.cefetmg.inf.hosten.model.domain.CategoriaQuarto;
 import br.cefetmg.inf.hosten.model.domain.ItemConforto;
@@ -20,7 +20,6 @@ public class CategoriaQuartoMB implements Serializable {
     private CategoriaQuarto categoria;
     
     private List<ItemConforto> itensSelecionados;
-    private List<String> nomesItens;
 
     public CategoriaQuartoMB() {
         categoria = new CategoriaQuarto(null, null, null);
@@ -59,7 +58,7 @@ public class CategoriaQuartoMB implements Serializable {
 
         IManterCategoriaQuarto manterCategoria = new ManterCategoriaQuartoProxy();
         try {
-            boolean testeExclusao = manterCategoria.alterar(codCategoriaAlterar, categoria, null);
+            boolean testeExclusao = manterCategoria.alterar(codCategoriaAlterar, categoria, itensSelecionados);
             if (testeExclusao) {
                 context.addMessage(null, new FacesMessage("Registro alterado com sucesso!"));
                 return;
@@ -108,7 +107,7 @@ public class CategoriaQuartoMB implements Serializable {
         IManterCategoriaQuarto manterCategoria = new ManterCategoriaQuartoProxy();
 
         try {
-            boolean testeInsercao = manterCategoria.inserir(categoria, null);
+            boolean testeInsercao = manterCategoria.inserir(categoria, itensSelecionados);
             if (testeInsercao) {
                 context.addMessage(null, new FacesMessage("Registro inserido com sucesso!"));
                 return "sucesso";
@@ -121,25 +120,16 @@ public class CategoriaQuartoMB implements Serializable {
             return "falha";
         }
     }
-    
+
     public List<ItemConforto> getItensSelecionados() {
+        System.out.println("getItensSelecionados");
+        
         return itensSelecionados;
     }
-    
-    public void setItensSelecionados (List<ItemConforto> itens) {
-        itensSelecionados = itens;
-    }
 
-    public List<String> getNomesItens() {
-        for (ItemConforto item : itensSelecionados)
-            nomesItens.add(item.getDesItem());
-        
-        return nomesItens;
+    public void setItensSelecionados(List<ItemConforto> itensSelecionados) {
+        System.out.println("setItensSelecionados");
+        this.itensSelecionados = itensSelecionados;
     }
-
-    public void setNomesItens(List<String> nomesItens) {
-        this.nomesItens = nomesItens;
-    }
-
     
 }

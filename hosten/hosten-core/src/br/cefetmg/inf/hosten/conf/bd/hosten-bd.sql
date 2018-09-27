@@ -309,3 +309,8 @@ INSERT INTO public.programa(codprograma, desprograma)
     VALUES ('011', 'Tela de Áreas de Serviço');
 INSERT INTO public.programa(codprograma, desprograma)
     VALUES ('012', 'Tela de Serviços');
+
+INSERT INTO public.cargo(codcargo, nomcargo, idtmaster)
+    VALUES('001', 'Administrador', true);
+INSERT INTO public.usuario(codusuario, nomusuario, codcargo, dessenha, desemail)
+    VALUES('0001', 'Admin', '001','B7E94BE513E96E8C45CD23D162275E5A12EBDE9100A425C4EBCDD7FA4DCD897C', 'adm@email.com');
