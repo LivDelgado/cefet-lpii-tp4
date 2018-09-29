@@ -5,6 +5,7 @@ import br.cefetmg.inf.hosten.model.domain.ItemConforto;
 import br.cefetmg.inf.hosten.model.service.IManterCategoriaQuarto;
 import br.cefetmg.inf.hosten.proxy.ManterCategoriaQuartoProxy;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -19,7 +20,7 @@ public class CategoriaQuartoMB implements Serializable {
     private List<CategoriaQuarto> listaCategorias;
     private CategoriaQuarto categoria;
     
-    private List<ItemConforto> itensSelecionados;
+    private ItemConforto [] itensSelecionadosArray;
 
     public CategoriaQuartoMB() {
         categoria = new CategoriaQuarto(null, null, null);
@@ -56,9 +57,14 @@ public class CategoriaQuartoMB implements Serializable {
 
         categoria = (CategoriaQuarto) event.getObject();
 
+        List <ItemConforto> listaItens = new ArrayList();
+        for (ItemConforto item : itensSelecionadosArray) {
+            listaItens.add(item);
+        }
+        
         IManterCategoriaQuarto manterCategoria = new ManterCategoriaQuartoProxy();
         try {
-            boolean testeExclusao = manterCategoria.alterar(codCategoriaAlterar, categoria, itensSelecionados);
+            boolean testeExclusao = manterCategoria.alterar(codCategoriaAlterar, categoria, listaItens);
             if (testeExclusao) {
                 context.addMessage(null, new FacesMessage("Registro alterado com sucesso!"));
                 return;
@@ -106,8 +112,14 @@ public class CategoriaQuartoMB implements Serializable {
 
         IManterCategoriaQuarto manterCategoria = new ManterCategoriaQuartoProxy();
 
+        List <ItemConforto> listaItens = new ArrayList();
+        for (ItemConforto item : itensSelecionadosArray) {
+            listaItens.add(item);
+        }
+        
         try {
-            boolean testeInsercao = manterCategoria.inserir(categoria, itensSelecionados);
+            boolean testeInsercao = manterCategoria.inserir(categoria, listaItens);
+            
             if (testeInsercao) {
                 context.addMessage(null, new FacesMessage("Registro inserido com sucesso!"));
                 return "sucesso";
@@ -121,15 +133,12 @@ public class CategoriaQuartoMB implements Serializable {
         }
     }
 
-    public List<ItemConforto> getItensSelecionados() {
-        System.out.println("getItensSelecionados");
-        
-        return itensSelecionados;
+    public ItemConforto[] getItensSelecionadosArray() {
+        return itensSelecionadosArray;
     }
 
-    public void setItensSelecionados(List<ItemConforto> itensSelecionados) {
-        System.out.println("setItensSelecionados");
-        this.itensSelecionados = itensSelecionados;
+    public void setItensSelecionadosArray(ItemConforto[] itensSelecionadosArray) {
+        this.itensSelecionadosArray = itensSelecionadosArray;
     }
     
 }

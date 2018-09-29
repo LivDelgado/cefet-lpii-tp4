@@ -31,8 +31,6 @@ public class ItemConforto implements Serializable {
     @Override
     public boolean equals(Object obj) {
         
-        System.out.println("if (this == obj) --> " + (this == obj));
-        
         if (this == obj) {
             return true;
         }

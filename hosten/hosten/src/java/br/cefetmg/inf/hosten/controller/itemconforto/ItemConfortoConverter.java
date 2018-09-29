@@ -17,8 +17,6 @@ public class ItemConfortoConverter implements Converter  {
         String codItem = value.substring(0, value.indexOf(" -"));
         String desItem = value.substring(value.indexOf("- ")+2, value.length());
         
-        System.out.println("getAsObject: codItem = " + codItem + " AND desItem = " + desItem);
-
         return new  ItemConforto(codItem, desItem);
     }
     
@@ -26,8 +24,6 @@ public class ItemConfortoConverter implements Converter  {
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         ItemConforto item = ((ItemConforto) value);
         String itemAsString = item.getCodItem() + " - " + item.getDesItem();
-        
-        System.out.println("getAsString: " + itemAsString);
         
         return itemAsString;
     }

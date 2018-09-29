@@ -26,7 +26,7 @@ public class ManterServico implements IManterServico {
         if (servico.getDesServico().length() > 40) {
             throw new NegocioException("A descrição do serviço ultrapassou os 40 caracteres máximos permitidos.");
         }
-        if (servico.getVlrUnit() > 9999999.99) {
+        if (servico.getVlrUnit() > 99999.99) {
             throw new NegocioException("O valor do serviço ultrapassou os R$9999999,99 máximos permitidos.");
         }
 
@@ -55,7 +55,7 @@ public class ManterServico implements IManterServico {
         if (servico.getDesServico().length() > 40) {
             throw new NegocioException("A descrição do serviço ultrapassou os 40 caracteres máximos permitidos.");
         }
-        if (servico.getVlrUnit() > 9999999.99) {
+        if (servico.getVlrUnit() > 99999.99) {
             throw new NegocioException("O valor do serviço ultrapassou os R$9999999,99 máximos permitidos.");
         }
 
