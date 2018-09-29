@@ -69,7 +69,7 @@ public class ManterServicoArea implements IManterServicoArea {
             throw new NegocioException("O nome da área de serviço ultrapassou os 40 caracteres máximos permitidos.");
         }
 
-        List<ServicoArea> buscaRegistroAntigo = listar(codRegistro, "codCargo");
+        List<ServicoArea> buscaRegistroAntigo = listar(codRegistro, "codServicoArea");
         ServicoArea registroAntigo = buscaRegistroAntigo.get(0);
         
         // pesquisa para saber se há alguma área já 
