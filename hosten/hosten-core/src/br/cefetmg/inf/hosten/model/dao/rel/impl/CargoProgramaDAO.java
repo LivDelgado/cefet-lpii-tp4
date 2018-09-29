@@ -57,13 +57,11 @@ public class CargoProgramaDAO implements ICargoProgramaDAO {
 
         List<CargoPrograma> cargoProgramaEncontrados = new ArrayList<>();
 
-        int i = 0;
         while (rs.next()) {
             cargoProgramaEncontrados
                     .add(new CargoPrograma(
                             rs.getString(1),
                             rs.getString(2)));
-            i++;
         }
         return cargoProgramaEncontrados;
     }
@@ -77,7 +75,7 @@ public class CargoProgramaDAO implements ICargoProgramaDAO {
                 + "WHERE A.codCargo = ?";
         PreparedStatement pStmt = con.prepareStatement(qry);
         pStmt.setString(1, codCargo);
-        ResultSet rs = pStmt.executeQuery(qry);
+        ResultSet rs = pStmt.executeQuery();
 
         List<Programa> programasEncontrados = new ArrayList<>();
 

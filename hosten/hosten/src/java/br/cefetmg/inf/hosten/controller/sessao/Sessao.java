@@ -30,11 +30,11 @@ public class Sessao {
          setAtributo(ConstantesSessao.USUARIO_LOGADO, usuario);
     }
      
-    public Object getAtributo(ConstantesSessao cs){
+    private Object getAtributo(ConstantesSessao cs){
          return contextoAtual().getSessionMap().get(cs.name());
     }
      
-    public void setAtributo(ConstantesSessao cs, Object valor){
+    private void setAtributo(ConstantesSessao cs, Object valor){
          contextoAtual().getSessionMap().put(cs.name(), valor);
     }
     

@@ -27,9 +27,7 @@ public class CategoriaQuartoMB implements Serializable {
         IManterCategoriaQuarto manterCategoria = new ManterCategoriaQuartoProxy();
         try {
             listaCategorias = manterCategoria.listarTodos();
-        } catch (Exception ex) {
-            //
-            //
+        } catch (Exception e) {
             //
         }
     }

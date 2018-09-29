@@ -44,7 +44,7 @@ public class LoginMB implements Serializable {
         try {
             Usuario usuarioAtual = manterUsuario.usuarioLogin(email, senha);
             if (usuarioAtual != null) {
-                Sessao.getInstance().setAtributo(ConstantesSessao.USUARIO_LOGADO, usuarioAtual);
+                Sessao.getInstance().setUsuarioLogado(usuarioAtual);
                 
                 retorno = true;
                 
