@@ -57,7 +57,8 @@
                                 <f:facet name="output"><h:outputText value="${viewScope[descricoes]}"/></f:facet>
                                 <f:facet name="input">
                                     <p:selectCheckboxMenu id="itens" value="#{categoriaMB.itensSelecionadosArray}" label="Itens" 
-                                                          filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
+                                                          filter="true" filterMatchMode="startsWith" panelStyle="width:250px"
+                                                          converter="itemConfortoConverter">
                                         <f:selectItems value="#{itemMB.listaItens}" />
                                     </p:selectCheckboxMenu>
                                 </f:facet>

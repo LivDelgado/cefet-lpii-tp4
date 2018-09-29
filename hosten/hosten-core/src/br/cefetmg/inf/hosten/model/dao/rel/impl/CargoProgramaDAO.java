@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import br.cefetmg.inf.hosten.model.dao.rel.ICargoProgramaDAO;
 import br.cefetmg.inf.hosten.model.domain.Programa;
-import java.sql.Statement;
 
 public class CargoProgramaDAO implements ICargoProgramaDAO {
 

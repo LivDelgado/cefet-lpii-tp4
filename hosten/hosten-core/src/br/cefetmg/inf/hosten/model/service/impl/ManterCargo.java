@@ -196,6 +196,7 @@ public class ManterCargo implements IManterCargo {
     @Override
     public List<Programa> listarProgramasRelacionados(String codCargo) 
             throws NegocioException, SQLException {
+        System.out.println("ASDAASDASDASDSAD");
         if(codCargo != null) {
             ICargoProgramaDAO cargoProgramaDAO = CargoProgramaDAO.getInstance();
             List<Programa> lista = cargoProgramaDAO.buscaProgramasRelacionados(codCargo); 

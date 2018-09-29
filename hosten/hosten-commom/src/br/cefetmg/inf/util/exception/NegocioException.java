@@ -4,8 +4,6 @@ public class NegocioException extends Exception {
 
     public NegocioException() {
         //
-        //
-        //
     }
 
     public NegocioException(String msg) {

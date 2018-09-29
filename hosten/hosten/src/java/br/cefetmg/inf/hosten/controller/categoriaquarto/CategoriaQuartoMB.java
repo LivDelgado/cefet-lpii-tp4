@@ -1,33 +1,37 @@
 package br.cefetmg.inf.hosten.controller.categoriaquarto;
 
+import br.cefetmg.inf.hosten.controller.context.ContextUtils;
 import br.cefetmg.inf.hosten.model.domain.CategoriaQuarto;
 import br.cefetmg.inf.hosten.model.domain.ItemConforto;
 import br.cefetmg.inf.hosten.model.service.IManterCategoriaQuarto;
 import br.cefetmg.inf.hosten.proxy.ManterCategoriaQuartoProxy;
+import br.cefetmg.inf.util.exception.NegocioException;
+import java.io.IOException;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
+import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.RowEditEvent;
 
-@ManagedBean(name = "categoriaMB")
 @ViewScoped
+@Named("categoriaMB")
 public class CategoriaQuartoMB implements Serializable {
 
     private List<CategoriaQuarto> listaCategorias;
     private CategoriaQuarto categoria;
-    
-    private ItemConforto [] itensSelecionadosArray;
+
+    private ItemConforto[] itensSelecionados;
 
     public CategoriaQuartoMB() {
         categoria = new CategoriaQuarto(null, null, null);
         IManterCategoriaQuarto manterCategoria = new ManterCategoriaQuartoProxy();
         try {
             listaCategorias = manterCategoria.listarTodos();
-        } catch (Exception e) {
+        } catch (NegocioException | SQLException e) {
             //
         }
     }
@@ -48,95 +52,80 @@ public class CategoriaQuartoMB implements Serializable {
         this.categoria = categoria;
     }
 
-    public void onRowEdit(RowEditEvent event) {
-        FacesContext context = FacesContext.getCurrentInstance();
-
+    public void onRowEdit(RowEditEvent event) throws IOException {
         String codCategoriaAlterar = (String) event.getComponent().getAttributes().get("categoriaEditar");
 
         categoria = (CategoriaQuarto) event.getObject();
 
-        List <ItemConforto> listaItens = new ArrayList();
-        for (ItemConforto item : itensSelecionadosArray) {
-            listaItens.add(item);
-        }
-        
+        List<ItemConforto> listaItens = new ArrayList();
+        listaItens.addAll(Arrays.asList(itensSelecionados));
+
         IManterCategoriaQuarto manterCategoria = new ManterCategoriaQuartoProxy();
         try {
             boolean testeExclusao = manterCategoria.alterar(codCategoriaAlterar, categoria, listaItens);
             if (testeExclusao) {
-                context.addMessage(null, new FacesMessage("Registro alterado com sucesso!"));
-                return;
+                ContextUtils.mostrarMensagem("Alteração efetuada", "Registro alterado com sucesso!", true);
             } else {
-                context.addMessage(null, new FacesMessage("Falha ao alterar o registro!"));
-                return;
+                ContextUtils.mostrarMensagem("Falha na alteração", "Falha ao alterar o registro!", true);
             }
-        } catch (Exception ex) {
-            context.addMessage(null, new FacesMessage(ex.getMessage()));
-            return;
+        } catch (NegocioException | SQLException ex) {
+            ContextUtils.mostrarMensagem("Falha na alteração", ex.getMessage(), true);
+            ContextUtils.redireciona(null);
         }
     }
 
     public void onRowCancel(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Edição Cancelada", ((CategoriaQuarto) event.getObject()).getCodCategoria());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        ContextUtils.mostrarMensagem("Edição Cancelada", ((CategoriaQuarto) event.getObject()).getCodCategoria(), false);
     }
 
     public String excluir(CategoriaQuarto categoria) {
         this.categoria = categoria;
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.getExternalContext().getFlash().setKeepMessages(true);
 
         IManterCategoriaQuarto manterCategoria = new ManterCategoriaQuartoProxy();
-
         try {
             boolean testeExclusao = manterCategoria.excluir(categoria.getCodCategoria());
             if (testeExclusao) {
-                context.addMessage(null, new FacesMessage("Registro excluído com sucesso!"));
+                ContextUtils.mostrarMensagem("Exclusão efetuada", "Registro excluído com sucesso!", true);
                 return "sucesso";
             } else {
-                context.addMessage(null, new FacesMessage("Falha ao excluir o registro!"));
+                ContextUtils.mostrarMensagem("Falha na exclusão", "Falha ao excluir o registro!", true);
                 return "falha";
             }
-        } catch (Exception ex) {
-            context.addMessage(null, new FacesMessage(ex.getMessage()));
+        } catch (NegocioException | SQLException ex) {
+            ContextUtils.mostrarMensagem("Falha na exclusão", ex.getMessage(), true);
             return "falha";
         }
 
     }
 
     public String inserir() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.getExternalContext().getFlash().setKeepMessages(true);
-
         IManterCategoriaQuarto manterCategoria = new ManterCategoriaQuartoProxy();
 
-        List <ItemConforto> listaItens = new ArrayList();
-        for (ItemConforto item : itensSelecionadosArray) {
-            listaItens.add(item);
-        }
-        
+        List<ItemConforto> listaItens = new ArrayList();
+        listaItens.addAll(Arrays.asList(itensSelecionados));
+
         try {
             boolean testeInsercao = manterCategoria.inserir(categoria, listaItens);
-            
+
             if (testeInsercao) {
-                context.addMessage(null, new FacesMessage("Registro inserido com sucesso!"));
+                ContextUtils.mostrarMensagem("Inserção efetuada", "Registro inserido com sucesso!", true);
                 return "sucesso";
             } else {
-                context.addMessage(null, new FacesMessage("Falha ao inserir o registro!"));
+                ContextUtils.mostrarMensagem("Falha na inserção", "Falha ao inserir o registro!", true);
                 return "falha";
             }
-        } catch (Exception ex) {
-            context.addMessage(null, new FacesMessage(ex.getMessage()));
+        } catch (NegocioException | SQLException ex) {
+            ContextUtils.mostrarMensagem("Falha na inserção", ex.getMessage(), true);
             return "falha";
         }
     }
 
     public ItemConforto[] getItensSelecionadosArray() {
-        return itensSelecionadosArray;
+        return itensSelecionados;
     }
 
     public void setItensSelecionadosArray(ItemConforto[] itensSelecionadosArray) {
-        this.itensSelecionadosArray = itensSelecionadosArray;
+        this.itensSelecionados = itensSelecionadosArray;
     }
-    
+
 }

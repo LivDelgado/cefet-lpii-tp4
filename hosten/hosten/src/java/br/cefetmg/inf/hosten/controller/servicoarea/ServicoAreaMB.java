@@ -1,35 +1,38 @@
 package br.cefetmg.inf.hosten.controller.servicoarea;
 
+import br.cefetmg.inf.hosten.controller.context.ContextUtils;
 import br.cefetmg.inf.hosten.model.domain.ServicoArea;
 import br.cefetmg.inf.hosten.model.service.IManterServicoArea;
 import br.cefetmg.inf.hosten.proxy.ManterServicoAreaProxy;
+import br.cefetmg.inf.util.exception.NegocioException;
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.List;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
+import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.RowEditEvent;
 
-@ManagedBean(name = "servicoAreaMB")
 @ViewScoped
+@Named("servicoAreaMB")
 public class ServicoAreaMB implements Serializable {
-    
+
     private List<ServicoArea> listaServicoAreas;
     private ServicoArea servicoArea;
     private String codServicoAreaAlterar;
-    
+
     public ServicoAreaMB() {
         servicoArea = new ServicoArea(null, null);
         IManterServicoArea manterServicoArea = new ManterServicoAreaProxy();
         try {
             listaServicoAreas = manterServicoArea.listarTodos();
-        } catch (Exception ex) {
+        } catch (NegocioException | SQLException ex) {
             //
         }
     }
-    
+
     public ServicoArea getServicoArea() {
         return servicoArea;
     }
@@ -37,85 +40,72 @@ public class ServicoAreaMB implements Serializable {
     public void setServicoArea(ServicoArea servicoArea) {
         this.servicoArea = servicoArea;
     }
-    
+
     public List<ServicoArea> getListaServicoAreas() {
         return listaServicoAreas;
     }
-    
+
     public void onRowInit(RowEditEvent event) {
-        codServicoAreaAlterar = (String) event.getComponent().getAttributes().get("servicoAreaEditar");           
+        codServicoAreaAlterar = (String) event.getComponent().getAttributes().get("servicoAreaEditar");
     }
-    
+
     public void onRowEdit(RowEditEvent event) throws IOException {
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.getExternalContext().getFlash().setKeepMessages(true);
-        
         servicoArea = (ServicoArea) event.getObject();
-        
+
         IManterServicoArea manterServicoArea = new ManterServicoAreaProxy();
-        
+
         try {
             boolean testeAlteracao = manterServicoArea.alterar(codServicoAreaAlterar, servicoArea);
             if (testeAlteracao) {
-                context.addMessage(null, new FacesMessage("Registro alterado com sucesso!"));
-                return;
+                ContextUtils.mostrarMensagem("Alteração efetuada", "Registro alterado com sucesso!", true);
             } else {
-                context.addMessage(null, new FacesMessage("Falha ao alterar o registro!"));
-                return;
+                ContextUtils.mostrarMensagem("Falha na alteração", "Falha ao alterar o registro!", true);
             }
-        } catch (Exception ex) {
-            context.addMessage(null, new FacesMessage(ex.getMessage()));
-            FacesContext.getCurrentInstance().getExternalContext().redirect("servico-area.jsf");
-            return;
+        } catch (NegocioException | SQLException ex) {
+            ContextUtils.mostrarMensagem("Falha na alteração", ex.getMessage(), true);
+            ContextUtils.redireciona(null);
         }
     }
-    
+
     public void onRowCancel(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Edição Cancelada", ((ServicoArea) event.getObject()).getCodServicoArea());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        ContextUtils.mostrarMensagem("Edição Cancelada", ((ServicoArea) event.getObject()).getCodServicoArea(), false);
     }
-    
+
     public String excluir(ServicoArea servicoArea) {
         this.servicoArea = servicoArea;
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.getExternalContext().getFlash().setKeepMessages(true);
 
         IManterServicoArea manterServicoArea = new ManterServicoAreaProxy();
-        
+
         try {
             boolean testeExclusao = manterServicoArea.excluir(servicoArea.getCodServicoArea());
             if (testeExclusao) {
-                context.addMessage(null, new FacesMessage("Registro excluído com sucesso!"));
+                ContextUtils.mostrarMensagem("Exclusão efetuada", "Registro excluído com sucesso!", true);
                 return "sucesso";
             } else {
-                context.addMessage(null, new FacesMessage("Falha ao excluir o registro!"));
+                ContextUtils.mostrarMensagem("Falha na exclusão", "Falha ao excluir o registro!", true);
                 return "falha";
             }
-        } catch (Exception ex) {
-            context.addMessage(null, new FacesMessage(ex.getMessage()));
+        } catch (NegocioException | SQLException ex) {
+            ContextUtils.mostrarMensagem("Falha na exclusão", ex.getMessage(), true);
             return "falha";
         }
     }
-    
-    public String inserir() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.getExternalContext().getFlash().setKeepMessages(true);
 
+    public String inserir() {
         IManterServicoArea manterServicoArea = new ManterServicoAreaProxy();
-        
+
         try {
             boolean testeInsercao = manterServicoArea.inserir(servicoArea);
             if (testeInsercao) {
-                context.addMessage(null, new FacesMessage("Registro inserido com sucesso!"));
+                ContextUtils.mostrarMensagem("Inserção efetuada", "Registro inserido com sucesso!", true);
                 return "sucesso";
             } else {
-                context.addMessage(null, new FacesMessage("Falha ao inserir o registro!"));
+                ContextUtils.mostrarMensagem("Falha na inserção", "Falha ao inserir o registro!", true);
                 return "falha";
             }
-        } catch (Exception ex) {
-            context.addMessage(null, new FacesMessage(ex.getMessage()));
+        } catch (NegocioException | SQLException ex) {
+            ContextUtils.mostrarMensagem("Falha na inserção", ex.getMessage(), true);
             return "falha";
-        }  
+        }
     }
-
 }

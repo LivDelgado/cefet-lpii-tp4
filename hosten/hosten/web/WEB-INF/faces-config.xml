@@ -9,38 +9,38 @@
         <navigation-case>
             <from-action>#{loginMB.validaLogin}</from-action>
             <from-outcome>true</from-outcome>
-            <to-view-id>/view/itens-conforto.xhtml</to-view-id>
+            <to-view-id>/template.jsf</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>
             <from-action>#{loginMB.validaLogin}</from-action>
             <from-outcome>false</from-outcome>
-            <to-view-id>/index.xhtml</to-view-id>
+            <to-view-id>/index.jsf</to-view-id>
         </navigation-case>
 
         <!-- Item de Conforto -->
         <navigation-case>
             <from-action>#{itemMB.excluir(item)}</from-action>
             <from-outcome>falha</from-outcome>
-            <to-view-id>/view/itens-conforto.xhtml</to-view-id>
+            <to-view-id>/view/itens-conforto.jsf</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>
             <from-action>#{itemMB.excluir(item)}</from-action>
             <from-outcome>sucesso</from-outcome>
-            <to-view-id>/view/itens-conforto.xhtml</to-view-id>
+            <to-view-id>/view/itens-conforto.jsf</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>
             <from-action>#{itemMB.inserir}</from-action>
             <from-outcome>falha</from-outcome>
-            <to-view-id>/view/itens-conforto.xhtml</to-view-id>
+            <to-view-id>/view/itens-conforto.jsf</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>
             <from-action>#{itemMB.inserir}</from-action>
             <from-outcome>sucesso</from-outcome>
-            <to-view-id>/view/itens-conforto.xhtml</to-view-id>
+            <to-view-id>/view/itens-conforto.jsf</to-view-id>
             <redirect/>
         </navigation-case>
 
@@ -48,25 +48,25 @@
         <navigation-case>
             <from-action>#{categoriaMB.excluir(categoria)}</from-action>
             <from-outcome>falha</from-outcome>
-            <to-view-id>/view/categoria-quarto.xhtml</to-view-id>
+            <to-view-id>/view/categoria-quarto.jsf</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>
             <from-action>#{categoriaMB.excluir(categoria)}</from-action>
             <from-outcome>sucesso</from-outcome>
-            <to-view-id>/view/categoria-quarto.xhtml</to-view-id>
+            <to-view-id>/view/categoria-quarto.jsf</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>
             <from-action>#{categoriaMB.inserir}</from-action>
             <from-outcome>falha</from-outcome>
-            <to-view-id>/view/categoria-quarto.xhtml</to-view-id>
+            <to-view-id>/view/categoria-quarto.jsf</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>
             <from-action>#{categoriaMB.inserir}</from-action>
             <from-outcome>sucesso</from-outcome>
-            <to-view-id>/view/categoria-quarto.xhtml</to-view-id>
+            <to-view-id>/view/categoria-quarto.jsf</to-view-id>
             <redirect/>
         </navigation-case>
         
@@ -74,27 +74,26 @@
         <navigation-case>
             <from-action>#{servicoAreaMB.excluir(servicoArea)}</from-action>
             <from-outcome>falha</from-outcome>
-            <to-view-id>/view/servico-area.xhtml</to-view-id>
+            <to-view-id>/view/servico-area.jsf</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>
             <from-action>#{servicoAreaMB.excluir(servicoArea)}</from-action>
             <from-outcome>sucesso</from-outcome>
-            <to-view-id>/view/servico-area.xhtml</to-view-id>
+            <to-view-id>/view/servico-area.jsf</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>
             <from-action>#{servicoAreaMB.inserir}</from-action>
             <from-outcome>falha</from-outcome>
-            <to-view-id>/view/servico-area.xhtml</to-view-id>
+            <to-view-id>/view/servico-area.jsf</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>
             <from-action>#{servicoAreaMB.inserir}</from-action>
             <from-outcome>sucesso</from-outcome>
-            <to-view-id>/view/servico-area.xhtml</to-view-id>
+            <to-view-id>/view/servico-area.jsf</to-view-id>
             <redirect/>
         </navigation-case>
-        
     </navigation-rule>
 </faces-config>
