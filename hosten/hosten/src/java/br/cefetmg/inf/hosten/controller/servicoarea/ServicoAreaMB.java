@@ -1,8 +1,8 @@
-package br.cefetmg.inf.hosten.controller.itemconforto;
+package br.cefetmg.inf.hosten.controller.servicoarea;
 
-import br.cefetmg.inf.hosten.model.domain.ItemConforto;
-import br.cefetmg.inf.hosten.model.service.IManterItemConforto;
-import br.cefetmg.inf.hosten.proxy.ManterItemConfortoProxy;
+import br.cefetmg.inf.hosten.model.domain.ServicoArea;
+import br.cefetmg.inf.hosten.model.service.IManterServicoArea;
+import br.cefetmg.inf.hosten.proxy.ManterServicoAreaProxy;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
@@ -12,51 +12,50 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.RowEditEvent;
 
-@ManagedBean(name = "itemMB")
+@ManagedBean(name = "servicoAreaMB")
 @ViewScoped
-public class ItemConfortoMB implements Serializable {
+public class ServicoAreaMB implements Serializable {
     
-    private List<ItemConforto> listaItens;
-    private ItemConforto item;
-    private String codItemAlterar;
-
-    public ItemConfortoMB() {
-        item = new ItemConforto(null, null);
-        IManterItemConforto manterItem = new ManterItemConfortoProxy();
+    private List<ServicoArea> listaServicoAreas;
+    private ServicoArea servicoArea;
+    private String codServicoAreaAlterar;
+    
+    public ServicoAreaMB() {
+        servicoArea = new ServicoArea(null, null);
+        IManterServicoArea manterServicoArea = new ManterServicoAreaProxy();
         try {
-            listaItens = manterItem.listarTodos();
+            listaServicoAreas = manterServicoArea.listarTodos();
         } catch (Exception ex) {
-            //
-            //
             //
         }
     }
-
-    public ItemConforto getItem() {
-        return item;
+    
+    public ServicoArea getServicoArea() {
+        return servicoArea;
     }
 
-    public void setItem(ItemConforto item) {
-        this.item = item;
+    public void setServicoArea(ServicoArea servicoArea) {
+        this.servicoArea = servicoArea;
     }
     
-    public List<ItemConforto> getListaItens () {
-        return listaItens;
+    public List<ServicoArea> getListaServicoAreas() {
+        return listaServicoAreas;
     }
     
     public void onRowInit(RowEditEvent event) {
-        codItemAlterar = (String) event.getComponent().getAttributes().get("itemEditar");           
+        codServicoAreaAlterar = (String) event.getComponent().getAttributes().get("servicoAreaEditar");           
     }
     
     public void onRowEdit(RowEditEvent event) throws IOException {
         FacesContext context = FacesContext.getCurrentInstance();
         context.getExternalContext().getFlash().setKeepMessages(true);
         
-        item = (ItemConforto) event.getObject();
+        servicoArea = (ServicoArea) event.getObject();
         
-        IManterItemConforto manterItem = new ManterItemConfortoProxy();
+        IManterServicoArea manterServicoArea = new ManterServicoAreaProxy();
+        
         try {
-            boolean testeAlteracao = manterItem.alterar(codItemAlterar, item);
+            boolean testeAlteracao = manterServicoArea.alterar(codServicoAreaAlterar, servicoArea);
             if (testeAlteracao) {
                 context.addMessage(null, new FacesMessage("Registro alterado com sucesso!"));
                 return;
@@ -66,25 +65,25 @@ public class ItemConfortoMB implements Serializable {
             }
         } catch (Exception ex) {
             context.addMessage(null, new FacesMessage(ex.getMessage()));
-            FacesContext.getCurrentInstance().getExternalContext().redirect("itens-conforto.jsf");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("servico-area.jsf");
             return;
         }
     }
     
     public void onRowCancel(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Edição Cancelada", ((ItemConforto) event.getObject()).getCodItem());
+        FacesMessage msg = new FacesMessage("Edição Cancelada", ((ServicoArea) event.getObject()).getCodServicoArea());
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
-        
-    public String excluir (ItemConforto item) {
-        this.item = item;
+    
+    public String excluir(ServicoArea servicoArea) {
+        this.servicoArea = servicoArea;
         FacesContext context = FacesContext.getCurrentInstance();
         context.getExternalContext().getFlash().setKeepMessages(true);
 
-        IManterItemConforto manterItem = new ManterItemConfortoProxy();
+        IManterServicoArea manterServicoArea = new ManterServicoAreaProxy();
         
         try {
-            boolean testeExclusao = manterItem.excluir(item.getCodItem());
+            boolean testeExclusao = manterServicoArea.excluir(servicoArea.getCodServicoArea());
             if (testeExclusao) {
                 context.addMessage(null, new FacesMessage("Registro excluído com sucesso!"));
                 return "sucesso";
@@ -95,17 +94,17 @@ public class ItemConfortoMB implements Serializable {
         } catch (Exception ex) {
             context.addMessage(null, new FacesMessage(ex.getMessage()));
             return "falha";
-        }    
+        }
     }
-            
-    public String inserir () {
+    
+    public String inserir() {
         FacesContext context = FacesContext.getCurrentInstance();
         context.getExternalContext().getFlash().setKeepMessages(true);
 
-        IManterItemConforto manterItem = new ManterItemConfortoProxy();
+        IManterServicoArea manterServicoArea = new ManterServicoAreaProxy();
         
         try {
-            boolean testeInsercao = manterItem.inserir(item);
+            boolean testeInsercao = manterServicoArea.inserir(servicoArea);
             if (testeInsercao) {
                 context.addMessage(null, new FacesMessage("Registro inserido com sucesso!"));
                 return "sucesso";

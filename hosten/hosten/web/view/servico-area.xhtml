@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Hosten - Áreas de Serviço</title>
+    </h:head>
+    <h:body>
+
+        <ui:composition template="../template.xhtml">
+
+            <ui:define name="content">
+
+                <h:form id="formRegistro"> 
+                    <p:growl id="msgs" showDetail="true"/>
+
+                    <p:dataTable id="registros" var="servicoArea" value="#{servicoAreaMB.listaServicoAreas}" editable="true">
+                        <f:facet name="header">
+                            <h:outputText value="Áreas de Serviço" style="font-size: 25px"/>
+                        </f:facet>
+
+                        <f:attribute name="servicoAreaEditar" value="#{servicoArea.codServicoArea}" />
+                        <p:ajax event="rowEditInit" listener="#{servicoAreaMB.onRowInit}" />
+                        <p:ajax event="rowEdit" listener="#{servicoAreaMB.onRowEdit}" update=":formRegistro:msgs" />
+                        <p:ajax event="rowEditCancel" listener="#{servicoAreaMB.onRowCancel}" update=":formRegistro:msgs" />
+
+                        <p:column headerText="Código" sortBy="#{servicoArea.codServicoArea}" filterBy="#{servicoArea.codServicoArea}" filterStyle="width: 80%" style="text-align: center">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{servicoArea.codServicoArea}"/></f:facet>
+                                <f:facet name="input"><p:inputText value="#{servicoArea.codServicoArea}" required="true" requiredMessage="Campo obrigatório" style="width: 77%"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Nome" sortBy="#{servicoArea.nomServicoArea}" filterBy="#{servicoArea.nomServicoArea}" filterStyle="width: 80%" style="text-align: center">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{servicoArea.nomServicoArea}"/></f:facet>
+                                <f:facet name="input"><p:inputText value="#{servicoArea.nomServicoArea}" required="true" requiredMessage="Campo obrigatório" style="width: 77%"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Editar" style="width: 55px">
+                            <p:rowEditor />
+                        </p:column>
+
+                        <p:column headerText="Excluir" style="text-align: center; width: 55px">
+
+                            <p:commandButton title="Excluir" icon="ui-icon-trash" action="#{servicoAreaMB.excluir(servicoArea)}" update=":formRegistro:msgs">
+                                <p:confirm header="Confirmação" message="Deseja realmente excluir o registro?" icon="ui-icon-alert" />
+                            </p:commandButton>
+
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Excluir" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+
+                <h:form>
+                    <h:panelGrid columns="1" cellpadding="5">
+                        <p:commandButton title="Nova Área de Serviço" icon="ui-icon-circle-plus" type="button" onclick="PF('modalInsercao').show();" />
+                    </h:panelGrid>
+                </h:form>
+
+                <p:dialog header="Inserir" widgetVar="modalInsercao" minHeight="40">
+                    <h:form>
+                        <p:growl id="msgi" showDetail="true"/>
+
+                        <p:panelGrid columns="2">
+                            <h:outputLabel for="codServicoArea" value="Código" />
+                            <p:inputText id="codServicoArea" value="#{servicoAreaMB.servicoArea.codServicoArea}" required="true" 
+                                         requiredMessage="Campo obrigatório" validatorMessage="Código inválido" 
+                                         title="Código de 3 caracteres">
+                                <f:validateLength minimum="3" maximum="3"/>
+                            </p:inputText>
+                            <p:tooltip id="codServicoAreaTip" for="codServicoArea" showEvent="focus" hideEvent="blur" />
+                            <p:message for="codServicoArea"/>
+
+                            <h:outputLabel for="nomServicoArea" value="Nome" />
+                            <p:inputText id="nomServicoArea" value="#{servicoAreaMB.servicoArea.nomServicoArea}" required="true" 
+                                         requiredMessage="Campo obrigatório" validatorMessage="Nome inválido"
+                                         title="Nome da área de serviço com máximo de 40 caracteres">
+                                <f:validateLength maximum="40"/>
+                            </p:inputText>
+                            <p:tooltip id="nomServicoAreaTip" for="nomServicoArea" showEvent="focus" hideEvent="blur" />
+                            <p:message for="nomServicoArea"/>
+
+                            <p:commandButton value="Inserir" action="#{servicoAreaMB.inserir}" onclick="PF('modalInsercao').hide();" update="msgi"/>
+                        </p:panelGrid>
+                    </h:form>
+                </p:dialog>
+
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>
+
