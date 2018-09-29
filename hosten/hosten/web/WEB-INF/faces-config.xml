@@ -4,6 +4,8 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
     <navigation-rule>
+        
+        <!-- Login -->
         <navigation-case>
             <from-action>#{loginMB.validaLogin}</from-action>
             <from-outcome>true</from-outcome>
@@ -16,6 +18,7 @@
             <to-view-id>index.xhtml</to-view-id>
         </navigation-case>
 
+        <!-- Item de Conforto -->
         <navigation-case>
             <from-action>#{itemMB.excluir(item)}</from-action>
             <from-outcome>falha</from-outcome>
@@ -41,6 +44,7 @@
             <redirect/>
         </navigation-case>
 
+        <!-- Categoria de Quarto -->
         <navigation-case>
             <from-action>#{categoriaMB.excluir(categoria)}</from-action>
             <from-outcome>falha</from-outcome>
@@ -65,5 +69,32 @@
             <to-view-id>/view/categoria-quarto.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        
+        <!-- Área de Serviço -->
+        <navigation-case>
+            <from-action>#{servicoAreaMB.excluir(servicoArea)}</from-action>
+            <from-outcome>falha</from-outcome>
+            <to-view-id>/view/servico-area.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{servicoAreaMB.excluir(servicoArea)}</from-action>
+            <from-outcome>sucesso</from-outcome>
+            <to-view-id>/view/servico-area.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{servicoAreaMB.inserir}</from-action>
+            <from-outcome>falha</from-outcome>
+            <to-view-id>/view/servico-area.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{servicoAreaMB.inserir}</from-action>
+            <from-outcome>sucesso</from-outcome>
+            <to-view-id>/view/servico-area.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        
     </navigation-rule>
 </faces-config>
