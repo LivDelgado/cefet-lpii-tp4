@@ -23,20 +23,21 @@
                         </f:facet>
 
                         <f:attribute name="itemEditar" value="#{item.codItem}" />
+                        <p:ajax event="rowEditInit" listener="#{itemMB.onRowInit}" />
                         <p:ajax event="rowEdit" listener="#{itemMB.onRowEdit}" update=":formRegistro:msgs" />
                         <p:ajax event="rowEditCancel" listener="#{itemMB.onRowCancel}" update=":formRegistro:msgs" />
 
                         <p:column headerText="Código" sortBy="#{item.codItem}" filterBy="#{item.codItem}" filterStyle="width: 80%" style="text-align: center">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{item.codItem}"/></f:facet>
-                                <f:facet name="input"><p:inputText value="#{item.codItem}" style="width: 77%" label="TesteOqEhLabel"/></f:facet>
+                                <f:facet name="input"><p:inputText value="#{item.codItem}" required="true" requiredMessage="Campo obrigatório" style="width: 77%"/></f:facet>
                             </p:cellEditor>
                         </p:column>
 
                         <p:column headerText="Descrição" sortBy="#{item.desItem}" filterBy="#{item.desItem}" filterStyle="width: 80%" style="text-align: center">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{item.desItem}"/></f:facet>
-                                <f:facet name="input"><p:inputText value="#{item.desItem}" style="width: 77%" label="TesteOqdesItem"/></f:facet>
+                                <f:facet name="input"><p:inputText value="#{item.desItem}" required="true" requiredMessage="Campo obrigatório" style="width: 77%"/></f:facet>
                             </p:cellEditor>
                         </p:column>
 
