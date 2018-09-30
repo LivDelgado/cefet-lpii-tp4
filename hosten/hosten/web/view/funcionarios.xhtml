@@ -1,0 +1,170 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" >
+    <h:head>
+        <title>Hosten - Funcionários</title>
+    </h:head>
+    <h:body>
+
+        <ui:composition template="../template.xhtml">
+
+            <ui:define name="content">
+
+                <h:form id="formRegistro"> 
+                    <p:growl id="msgs" showDetail="true"/>
+
+                    <p:dataTable id="registros" var="funcionario" value="#{funcionarioMB.listaFuncionarios}" editable="true">
+                        <f:facet name="header">
+                            <h:outputText value="Funcionários" style="font-size: 25px"/>
+                        </f:facet>
+
+                        <f:attribute name="funcionarioEditar" value="#{funcionario.codUsuario}" />
+                        <p:ajax event="rowEditInit" listener="#{funcionarioMB.onRowInit}" />
+                        <p:ajax event="rowEdit" listener="#{funcionarioMB.onRowEdit}" update=":formRegistro:msgs" />
+                        <p:ajax event="rowEditCancel" listener="#{funcionarioMB.onRowCancel}" update=":formRegistro:msgs" />
+
+                        <p:column headerText="Código" sortBy="#{funcionario.codUsuario}" 
+                                  filterBy="#{funcionario.codUsuario}" filterStyle="width: 80%" style="text-align: center">
+                                <h:outputText value="#{funcionario.codUsuario}"/>
+                        </p:column>
+
+                        <p:column headerText="Nome" sortBy="#{funcionario.nomUsuario}" 
+                                  filterBy="#{funcionario.nomUsuario}" filterStyle="width: 80%" style="text-align: center">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{funcionario.nomUsuario}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{funcionario.nomUsuario}" style="width: 77%"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Cargo" style="text-align: center">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{funcionarioMB.getCargoFuncionario(funcionario)}" converter="cargoConverter"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:selectOneMenu id="codCargo" value="#{funcionarioMB.cargoSelecionado}" label="Itens" 
+                                                          filter="true" filterMatchMode="startsWith" panelStyle="width:250px" 
+                                                          converter="cargoConverter">
+                                        <f:selectItems value="#{cargoMB.listaCargos}" var="cargo" itemLabel="#{cargo.nomCargo}" itemValue="#{cargo.codCargo}"/>
+                                    </p:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        
+                        <p:column headerText="Email" sortBy="#{funcionario.desEmail}" 
+                                  filterBy="#{funcionario.desEmail}" filterStyle="width: 80%" style="text-align: center">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{funcionario.desEmail}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{funcionario.desEmail}" style="width: 77%"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Senha" sortBy="#{funcionario.desSenha}" 
+                                  filterBy="#{funcionario.desSenha}" filterStyle="width: 80%" style="text-align: center">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{funcionario.desSenha}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:password value="#{funcionario.desSenha}" style="width: 77%"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+
+                        <p:column headerText="Editar" style="width: 55px">
+                            <p:rowEditor />
+                        </p:column>
+
+                        <p:column headerText="Excluir" style="text-align: center; width: 55px">
+
+                            <p:commandButton title="Excluir" icon="ui-icon-trash" 
+                                             action="#{funcionarioMB.excluir(funcionario)}" update=":formRegistro:msgs">
+                                <p:confirm header="Confirmação" message="Deseja realmente excluir o registro?" icon="ui-icon-alert" />
+                            </p:commandButton>
+
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Excluir" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+
+                        </p:column>
+
+
+                    </p:dataTable>
+                </h:form>
+
+                <h:form>
+                    <h:panelGrid columns="1" cellpadding="5">
+                        <p:commandButton title="Novo Funcionário" icon="ui-icon-circle-plus" type="button" onclick="PF('modalInsercao').show();" />
+                    </h:panelGrid>
+                </h:form>
+
+                <p:dialog header="Inserir" widgetVar="modalInsercao" minHeight="40">
+                    <h:form>
+                        <p:growl id="msgi" showDetail="true"/>
+
+                        <p:panelGrid columns="2">
+                            <h:outputLabel for="codUsuario" value="Código" />
+                            <p:inputText id="codUsuario" value="#{funcionarioMB.funcionario.codUsuario}" required="true" 
+                                         requiredMessage="Campo obrigatório" validatorMessage="Código inválido" 
+                                         title="Código de 4 caracteres">
+                                <f:validateLength minimum="4" maximum="4"/>
+                            </p:inputText>
+                            <p:tooltip id="codUsuarioTip" for="codUsuario" showEvent="focus" hideEvent="blur" />
+                            <p:message for="codUsuario"/>
+
+                            <h:outputLabel for="nomUsuario" value="Nome" />
+                            <p:inputText id="nomUsuario" value="#{funcionarioMB.funcionario.nomUsuario}" required="true" 
+                                         requiredMessage="Campo obrigatório" validatorMessage="Nome inválido"
+                                         title="Nome do funcionário com máximo de 90 caracteres">
+                                <f:validateLength maximum="90"/>
+                            </p:inputText>
+                            <p:tooltip id="nomUsuarioTip" for="nomUsuario" showEvent="focus" hideEvent="blur" />
+                            <p:message for="nomUsuario"/>
+
+                            <h:outputLabel for="codCargo" value="Cargo" />
+                            <p:selectOneMenu id="cargo" value="#{funcionarioMB.cargoSelecionado}" label="Cargos" 
+                                                  filter="true" filterMatchMode="startsWith" panelStyle="width:250px" converter="cargoConverter">
+                                <f:selectItems value="#{cargoMB.listaCargos}" var="cargo" itemLabel="#{cargo.nomCargo}" itemValue="#{cargo}"/>
+                            </p:selectOneMenu>
+
+                            <h:outputLabel for="desEmail" value="Email" />
+                            <p:inputText id="desEmail" value="#{funcionarioMB.funcionario.desEmail}" required="true" 
+                                         requiredMessage="Campo obrigatório" validatorMessage="Email inválido"
+                                         title="Email do funcionário com máximo de 60 caracteres">
+                                <f:validateLength maximum="60"/>
+                                <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+                            </p:inputText>
+                            <p:tooltip id="desEmailTip" for="desEmail" showEvent="focus" hideEvent="blur" />
+                            <p:message for="desEmail"/>
+
+                            <h:outputLabel for="desSenha" value="Senha" />
+                            <p:password id="desSenha" value="#{funcionarioMB.funcionario.desSenha}" required="true" 
+                                         requiredMessage="Campo obrigatório" validatorMessage="Senha inválida"
+                                         title="Senha do funcionário"/>
+                            <p:tooltip id="desSenhaTip" for="nomUsuario" showEvent="focus" hideEvent="blur" />
+                            <p:message for="desSenha"/>
+                            
+                            <p:commandButton value="Inserir" action="#{funcionarioMB.inserir}" onclick="PF('modalInsercao').hide();" update="msgi"/>
+                        </p:panelGrid>
+                    </h:form>
+                </p:dialog>
+                
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

@@ -173,5 +173,31 @@
             <to-view-id>/view/hospedes.jsf</to-view-id>
             <redirect/>
         </navigation-case>
+        
+        <!-- Funcionário -->
+        <navigation-case>
+            <from-action>#{funcionarioMB.excluir(funcionario)}</from-action>
+            <from-outcome>falha</from-outcome>
+            <to-view-id>/view/funcionarios.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{funcionarioMB.excluir(funcionario)}</from-action>
+            <from-outcome>sucesso</from-outcome>
+            <to-view-id>/view/funcionarios.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{funcionarioMB.inserir}</from-action>
+            <from-outcome>falha</from-outcome>
+            <to-view-id>/view/funcionarios.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{funcionarioMB.inserir}</from-action>
+            <from-outcome>sucesso</from-outcome>
+            <to-view-id>/view/funcionarios.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
 </faces-config>

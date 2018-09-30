@@ -1,6 +1,7 @@
 package br.cefetmg.inf.hosten.model.domain;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Cargo implements Serializable {
     private String codCargo; 
@@ -35,6 +36,24 @@ public class Cargo implements Serializable {
 
     public void setIdtMaster(boolean idtMaster) {
         this.idtMaster = idtMaster;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Cargo other = (Cargo) obj;
+        if (!Objects.equals(this.codCargo, other.codCargo)) {
+            return false;
+        }
+        return true;
     }
     
     
