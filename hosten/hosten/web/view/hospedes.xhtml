@@ -81,15 +81,15 @@
 
                         <p:panelGrid columns="2">
                             <h:outputLabel for="codCPF" value="CPF" />
-                            <p:inputMask id="codCPF" value="#{hospedeMB.hospede.codCPF}" required="true" 
-                                         title="Código de 11 caracteres" mask="999.999.999-99"/>
+                            <p:inputMask id="codCPF" value="#{hospedeMB.hospede.codCPF}" required="true" requiredMessage="Campo obrigatório"
+                                        title="Código de 11 caracteres" mask="999.999.999-99"/>
                             <p:tooltip id="codCPFTip" for="codCPF" showEvent="focus" hideEvent="blur" />
                             <p:message for="codCPF"/>
 
                             <h:outputLabel for="nomHospede" value="Nome" />
                             <p:inputText id="nomHospede" value="#{hospedeMB.hospede.nomHospede}" required="true" 
-                                         requiredMessage="Campo obrigatório" validatorMessage="Nome inválido"
-                                         title="Nome do hóspede com máximo de 90 caracteres" maxlength="90">
+                                        requiredMessage="Campo obrigatório" validatorMessage="Nome inválido"
+                                        title="Nome do hóspede com máximo de 90 caracteres" maxlength="90">
                                 <f:validateLength maximum="90"/>
                                 <f:validateRegex pattern="^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$"/>
                             </p:inputText>
@@ -98,8 +98,8 @@
                             
                             <h:outputLabel for="desEmail" value="Email" />
                             <p:inputText id="desEmail" value="#{hospedeMB.hospede.desEmail}" required="true" 
-                                         requiredMessage="Campo obrigatório" validatorMessage="Email inválido"
-                                         title="Email do hóspede com máximo de 90 caracteres" maxlength="90">
+                                        requiredMessage="Campo obrigatório" validatorMessage="Email inválido"
+                                        title="Email do hóspede com máximo de 90 caracteres" maxlength="90">
                                 <f:validateLength maximum="90"/>
                                 <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
                             </p:inputText>
@@ -107,8 +107,8 @@
                             <p:message for="desEmail"/>
                             
                             <h:outputLabel for="desTelefone" value="Telefone" />
-                            <p:inputMask id="desTelefone" value="#{hospedeMB.hospede.desTelefone}" mask="(999)9999-9999"
-                                         requiredMessage="Campo obrigatório" validatorMessage="Telefone inválido"/>
+                            <p:inputMask id="desTelefone" value="#{hospedeMB.hospede.desTelefone}" required="true" requiredMessage="Campo obrigatório" 
+                                        title="Telefone do hóspede" mask="(999)99999-9999"/>
                             <p:tooltip id="desTelefoneTip" for="desTelefone" showEvent="focus" hideEvent="blur" />
                             <p:message for="desTelefone"/>
 
