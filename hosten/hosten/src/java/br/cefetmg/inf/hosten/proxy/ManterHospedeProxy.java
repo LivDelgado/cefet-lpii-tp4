@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.FutureTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class ManterHospedeProxy implements IManterHospede {
@@ -69,7 +71,6 @@ public class ManterHospedeProxy implements IManterHospede {
         }
     }
 
-    /*
     @Override
     public boolean excluir(String codRegistro) throws NegocioException, SQLException {
         ArrayList lista = new ArrayList();
@@ -77,9 +78,12 @@ public class ManterHospedeProxy implements IManterHospede {
         lista.add("Excluir");
         lista.add(codRegistro);
         
-        return (boolean)operacaoRegistro(lista);
+        try {
+            return (boolean)operacaoRegistro(lista);
+        } catch (Exception ex) {
+            throw new NegocioException(ex.getMessage());
+        }
     }
-    */
     
     public Object operacaoRegistro (ArrayList lista) throws Exception {
         try {
