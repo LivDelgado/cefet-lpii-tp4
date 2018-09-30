@@ -8,12 +8,12 @@
     <h:head>
         <title>Hosten - Áreas de Serviço</title>
     </h:head>
-    
+
     <h:body>
         <ui:composition template="../template.xhtml">
-            
+
             <ui:define name="content">
-                
+
                 <h:form id="formRegistro"> 
                     <p:growl id="msgs" showDetail="true"/>
 
@@ -37,7 +37,13 @@
                                     <h:outputText value="#{servicoArea.nomServicoArea}"/>
                                 </f:facet>
                                 <f:facet name="input">
-                                    <p:inputText value="#{servicoArea.nomServicoArea}" required="true" requiredMessage="Campo obrigatório" style="width: 77%"/>
+                                    <p:inputText id="nomServicoArea" value="#{servicoArea.nomServicoArea}" required="true" 
+                                                 style="width: 77%"
+                                                 requiredMessage="Campo obrigatório" validatorMessage="Nome inválido"
+                                                 title="Nome da área de serviço com máximo de 40 caracteres">
+                                        <f:validateLength maximum="40"/>
+                                    </p:inputText>
+                                    <p:tooltip id="nomServicoAreaTip" for="nomServicoArea" showEvent="focus" hideEvent="blur" />
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>

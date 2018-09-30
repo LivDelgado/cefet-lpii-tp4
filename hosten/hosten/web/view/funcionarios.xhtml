@@ -39,7 +39,14 @@
                                     <h:outputText value="#{funcionario.nomUsuario}"/>
                                 </f:facet>
                                 <f:facet name="input">
-                                    <p:inputText value="#{funcionario.nomUsuario}" style="width: 77%"/>
+                                    <p:inputText id="nomUsuario" value="#{funcionario.nomUsuario}" required="true" 
+                                                 style="width: 77%"
+                                                 requiredMessage="Campo obrigatório" validatorMessage="Descrição inválida"
+                                                 title="Nome do funcionário com máximo de 90 caracteres">
+                                        <f:validateLength maximum="90"/>
+                                        <f:validateRegex pattern="^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$"/>
+                                    </p:inputText>
+                                    <p:tooltip id="nomUsuarioTip" for="nomUsuario" showEvent="focus" hideEvent="blur" />
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
@@ -67,7 +74,14 @@
                                     <h:outputText value="#{funcionario.desEmail}"/>
                                 </f:facet>
                                 <f:facet name="input">
-                                    <p:inputText value="#{funcionario.desEmail}" style="width: 77%"/>
+                                    <p:inputText id="desEmail" value="#{funcionario.desEmail}" required="true" 
+                                                 style="width: 77%"
+                                                 requiredMessage="Campo obrigatório" validatorMessage="Email inválido"
+                                                 title="Email do funcionário com máximo de 60 caracteres">
+                                        <f:validateLength maximum="60"/>
+                                        <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+                                    </p:inputText>
+                                    <p:tooltip id="desEmailTip" for="desEmail" showEvent="focus" hideEvent="blur" />
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
@@ -79,7 +93,11 @@
                                     <h:outputText value="#{funcionario.desSenha}"/>
                                 </f:facet>
                                 <f:facet name="input">
-                                    <p:password value="#{funcionario.desSenha}" style="width: 77%"/>
+                                    <p:password id="desSenha" value="#{funcionario.desSenha}" required="true" 
+                                                style="width: 77%"
+                                                requiredMessage="Campo obrigatório" validatorMessage="Senha inválida"
+                                                title="Senha do funcionário"/>
+                                    <p:tooltip id="desSenhaTip" for="nomUsuario" showEvent="focus" hideEvent="blur" />
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
@@ -129,12 +147,14 @@
 
                             <h:outputLabel for="nomUsuario" value="Nome" />
                             <p:inputText id="nomUsuario" value="#{funcionarioMB.funcionario.nomUsuario}" required="true" 
-                                         requiredMessage="Campo obrigatório" validatorMessage="Nome inválido"
+                                         requiredMessage="Campo obrigatório" validatorMessage="Descrição inválida"
                                          title="Nome do funcionário com máximo de 90 caracteres">
                                 <f:validateLength maximum="90"/>
+                                <f:validateRegex pattern="^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$"/>
                             </p:inputText>
                             <p:tooltip id="nomUsuarioTip" for="nomUsuario" showEvent="focus" hideEvent="blur" />
                             <p:message for="nomUsuario"/>
+
 
                             <h:outputLabel for="codCargo" value="Cargo" />
                             <p:selectOneMenu id="cargo" value="#{funcionarioMB.cargoSelecionado}" label="Cargos" 
