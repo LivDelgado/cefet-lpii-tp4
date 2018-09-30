@@ -295,7 +295,7 @@ INSERT INTO public.programa(codprograma, desprograma)
         ('007', 'funcionarios'),
         ('008', 'itens-conforto'),
         ('009', 'categoria-quarto'),
-        ('010', 'quarto'),
+        ('010', 'quartos'),
         ('011', 'servico-area'),
         ('012', 'servicos');
 
