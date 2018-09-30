@@ -45,8 +45,6 @@ public class ServicoDAO implements IServicoDAO {
 
     @Override
     public List<Servico> buscaServico(Object dadoBusca, String coluna) throws SQLException {
-        int i = 0;
-
         String qry = "SELECT * FROM Servico "
                 + "WHERE " + coluna + " "
                 + "= ?";
@@ -62,7 +60,6 @@ public class ServicoDAO implements IServicoDAO {
 
         List<Servico> servicoEncontrados = new ArrayList<>();
 
-        rs.beforeFirst();
         while (rs.next()) {
             servicoEncontrados
                     .add(new Servico(
@@ -70,7 +67,6 @@ public class ServicoDAO implements IServicoDAO {
                             rs.getString(2),
                             rs.getDouble(3),
                             rs.getString(4)));
-            i++;
         }
 
         return servicoEncontrados;

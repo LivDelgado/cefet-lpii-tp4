@@ -4,8 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:ui="http://java.sun.com/jsf/facelets" >
     <h:head>
         <title>Hosten - Categorias de Quarto</title>
     </h:head>
@@ -28,24 +27,32 @@
                         <p:ajax event="rowEdit" listener="#{categoriaMB.onRowEdit}" update=":formRegistro:msgs" />
                         <p:ajax event="rowEditCancel" listener="#{categoriaMB.onRowCancel}" update=":formRegistro:msgs" />
 
-                        <p:column headerText="Código" sortBy="#{categoria.codCategoria}" filterBy="#{categoria.codCategoria}" filterStyle="width: 80%" style="text-align: center">
+                        <p:column headerText="Código" sortBy="#{categoria.codCategoria}" 
+                                  filterBy="#{categoria.codCategoria}" filterStyle="width: 80%" style="text-align: center">
+                                <h:outputText value="#{categoria.codCategoria}"/>
+                        </p:column>
+
+                        <p:column headerText="Nome" sortBy="#{categoria.nomCategoria}" 
+                                  filterBy="#{categoria.nomCategoria}" filterStyle="width: 80%" style="text-align: center">
                             <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{categoria.codCategoria}"/></f:facet>
-                                <f:facet name="input"><p:inputText value="#{categoria.codCategoria}" style="width: 77%"/></f:facet>
+                                <f:facet name="output">
+                                    <h:outputText value="#{categoria.nomCategoria}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{categoria.nomCategoria}" style="width: 77%"/>
+                                </f:facet>
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column headerText="Nome" sortBy="#{categoria.nomCategoria}" filterBy="#{categoria.nomCategoria}" filterStyle="width: 80%" style="text-align: center">
+                        <p:column headerText="Valor da diária" sortBy="#{categoria.vlrDiaria}" 
+                                  filterBy="#{categoria.vlrDiaria}" filterStyle="width: 80%" style="text-align: center">
                             <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{categoria.nomCategoria}"/></f:facet>
-                                <f:facet name="input"><p:inputText value="#{categoria.nomCategoria}" style="width: 77%"/></f:facet>
-                            </p:cellEditor>
-                        </p:column>
-
-                        <p:column headerText="Valor da diária" sortBy="#{categoria.vlrDiaria}" filterBy="#{categoria.vlrDiaria}" filterStyle="width: 80%" style="text-align: center">
-                            <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{categoria.vlrDiaria}"/></f:facet>
-                                <f:facet name="input"><p:inputText value="#{categoria.vlrDiaria}" style="width: 77%"/></f:facet>
+                                <f:facet name="output">
+                                    <h:outputText value="#{categoria.vlrDiaria}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{categoria.vlrDiaria}" style="width: 77%"/>
+                                </f:facet>
                             </p:cellEditor>
                         </p:column>
 
@@ -53,12 +60,13 @@
                             <p:cellEditor>
                                 <f:facet name="output">
                                     <p:dataList value="#{categoriaMB.getItensRelacionados(categoria)}" var="reg">
-                                        <h:outputText value="#{reg.codItem}, #{reg.desItem}" style="display:inline-block"/>                                        
+                                        <h:outputText value="#{reg.desItem}" style="display:inline-block"/>                                        
                                     </p:dataList>
                                 </f:facet>
                                 <f:facet name="input">
                                     <p:selectCheckboxMenu id="itens" value="#{categoriaMB.itensSelecionadosArray}" label="Itens" 
-                                                          filter="true" filterMatchMode="startsWith" panelStyle="width:250px" converter="itemConfortoConverter">
+                                                          filter="true" filterMatchMode="startsWith" panelStyle="width:250px" 
+                                                          converter="itemConfortoConverter">
                                         <f:param name="categoriaAtual" value="#{categoria.codCategoria}" />
                                         <f:selectItems value="#{itemMB.listaItens}" var="item" itemLabel="#{item.desItem}" itemValue="#{item}"/>
                                     </p:selectCheckboxMenu>
@@ -72,7 +80,8 @@
 
                         <p:column headerText="Excluir" style="text-align: center; width: 55px">
 
-                            <p:commandButton title="Excluir" icon="ui-icon-trash" action="#{categoriaMB.excluir(categoria)}" update=":formRegistro:msgs">
+                            <p:commandButton title="Excluir" icon="ui-icon-trash" 
+                                             action="#{categoriaMB.excluir(categoria)}" update=":formRegistro:msgs">
                                 <p:confirm header="Confirmação" message="Deseja realmente excluir o registro?" icon="ui-icon-alert" />
                             </p:commandButton>
 

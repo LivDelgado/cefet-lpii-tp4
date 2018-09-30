@@ -60,13 +60,11 @@ public class ServicoAreaDAO implements IServicoAreaDAO{
 
         List<ServicoArea> servicoAreaEncontrados = new ArrayList<>();
 
-        int i = 0;
         while (rs.next()) {
             servicoAreaEncontrados
                     .add(new ServicoArea(
                             rs.getString(1),
                             rs.getString(2)));
-            i++;
         }
 
         return servicoAreaEncontrados;
@@ -81,13 +79,11 @@ public class ServicoAreaDAO implements IServicoAreaDAO{
 
         List<ServicoArea> servicoAreasEncontrados = new ArrayList<>();
 
-        int i = 0;
         while (rs.next()) {
             servicoAreasEncontrados
                     .add(new ServicoArea(
                             rs.getString(1),
                             rs.getString(2)));
-            i++;
         }
 
         return servicoAreasEncontrados;

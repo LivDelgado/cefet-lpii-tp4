@@ -173,26 +173,25 @@ public class ManterCategoriaQuarto implements IManterCategoriaQuarto {
 
         // deleta todos os relacionamentos com aquela categoria
         ICategoriaItemConfortoDAO relDAO = CategoriaItemConfortoDAO.getInstance();
-        List<CategoriaItemConforto> listaREL
-                = relDAO.busca(
-                        categoriasPesquisadas.get(0).getCodCategoria(),
-                        "codCategoria");
+        List<CategoriaItemConforto> listaREL = relDAO.busca(
+                categoriasPesquisadas.get(0).getCodCategoria(),
+                "codCategoria");
+        
         if (!listaREL.isEmpty()) {
+            // Deleta tanto o relacionamento com os itens quanto a categoria em si
             return relDAO.deletaPorColuna(
-                    categoriasPesquisadas.get(0).getCodCategoria(),
-                    "codCategoria");
+                    categoriasPesquisadas.get(0).getCodCategoria(), "codCategoria")
+                    && objetoDAO.deletaCategoriaQuarto(codRegistro);
         }
-
-        // deleta a categoria
         return objetoDAO.deletaCategoriaQuarto(codRegistro);
     }
 
     @Override
     public List<CategoriaQuarto> listar(Object dadoBusca, String coluna)
             throws NegocioException, SQLException {
-        //
-        // confere se foi digitado um dado busca e se a coluna é válida
-        //
+        /*
+        * confere se foi digitado um dado busca e se a coluna é válida
+        */
         if (dadoBusca != null) {
             if (coluna.equals("codCategoria")
                     || coluna.equals("nomCategoria")
@@ -215,11 +214,11 @@ public class ManterCategoriaQuarto implements IManterCategoriaQuarto {
     }
 
     @Override
-    public List<ItemConforto> listarItensRelacionados(String codCategoria) 
+    public List<ItemConforto> listarItensRelacionados(String codCategoria)
             throws NegocioException, SQLException {
-        if(codCategoria != null) {
-            ICategoriaItemConfortoDAO categoriaItemConfortoDAO 
-                = CategoriaItemConfortoDAO.getInstance();
+        if (codCategoria != null) {
+            ICategoriaItemConfortoDAO categoriaItemConfortoDAO
+                    = CategoriaItemConfortoDAO.getInstance();
             return categoriaItemConfortoDAO.buscaItensConfortoRelacionados(codCategoria);
         }
         return null;

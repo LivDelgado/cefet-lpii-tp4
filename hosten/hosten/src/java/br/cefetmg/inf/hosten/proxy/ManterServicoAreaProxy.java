@@ -95,12 +95,13 @@ public class ManterServicoAreaProxy implements IManterServicoArea {
             ArrayList listaRecebida = ((ArrayList)retornoCallableClient.get());
             
             String tipoObjeto = (String)listaRecebida.get(0);
-            if (tipoObjeto.equals("Boolean")) {
-                return (boolean)listaRecebida.get(1);
-            } else if (tipoObjeto.equals("List<ServicoArea>")) {
-                return (List<ServicoArea>)listaRecebida.get(1);
-            } else if (tipoObjeto.equals("Exception")) {
-                throw (Exception)listaRecebida.get(1);
+            switch (tipoObjeto) {
+                case "Boolean":
+                    return (boolean)listaRecebida.get(1);
+                case "List<ServicoArea>":
+                    return (List<ServicoArea>)listaRecebida.get(1);
+                case "Exception":
+                    throw (Exception)listaRecebida.get(1);
             }
         }   catch (Exception ex) {
             throw ex;

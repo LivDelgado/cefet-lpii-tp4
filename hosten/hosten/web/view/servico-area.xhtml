@@ -8,12 +8,12 @@
     <h:head>
         <title>Hosten - Áreas de Serviço</title>
     </h:head>
+    
     <h:body>
-
         <ui:composition template="../template.xhtml">
-
+            
             <ui:define name="content">
-
+                
                 <h:form id="formRegistro"> 
                     <p:growl id="msgs" showDetail="true"/>
 
@@ -28,16 +28,17 @@
                         <p:ajax event="rowEditCancel" listener="#{servicoAreaMB.onRowCancel}" update=":formRegistro:msgs" />
 
                         <p:column headerText="Código" sortBy="#{servicoArea.codServicoArea}" filterBy="#{servicoArea.codServicoArea}" filterStyle="width: 80%" style="text-align: center">
-                            <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{servicoArea.codServicoArea}"/></f:facet>
-                                <f:facet name="input"><p:inputText value="#{servicoArea.codServicoArea}" required="true" requiredMessage="Campo obrigatório" style="width: 77%"/></f:facet>
-                            </p:cellEditor>
+                            <h:outputText value="#{servicoArea.codServicoArea}"/>
                         </p:column>
 
                         <p:column headerText="Nome" sortBy="#{servicoArea.nomServicoArea}" filterBy="#{servicoArea.nomServicoArea}" filterStyle="width: 80%" style="text-align: center">
                             <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{servicoArea.nomServicoArea}"/></f:facet>
-                                <f:facet name="input"><p:inputText value="#{servicoArea.nomServicoArea}" required="true" requiredMessage="Campo obrigatório" style="width: 77%"/></f:facet>
+                                <f:facet name="output">
+                                    <h:outputText value="#{servicoArea.nomServicoArea}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{servicoArea.nomServicoArea}" required="true" requiredMessage="Campo obrigatório" style="width: 77%"/>
+                                </f:facet>
                             </p:cellEditor>
                         </p:column>
 

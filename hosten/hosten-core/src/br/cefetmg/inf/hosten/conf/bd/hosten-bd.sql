@@ -1,5 +1,3 @@
-
-
 -- Create tables section -------------------------------------------------
 
 -- Table Programa
@@ -12,7 +10,7 @@ CREATE TABLE Programa(
 
 -- Add keys for table Programa
 
-ALTER TABLE Programa ADD CONSTRAINT Key1 PRIMARY KEY (codPrograma)
+ALTER TABLE Programa ADD CONSTRAINT Key1 PRIMARY KEY (codPrograma) 
 ;
 
 -- Table Cargo
@@ -26,7 +24,7 @@ CREATE TABLE Cargo(
 
 -- Add keys for table Cargo
 
-ALTER TABLE Cargo ADD CONSTRAINT Key2 PRIMARY KEY (codCargo)
+ALTER TABLE Cargo ADD CONSTRAINT Key2 PRIMARY KEY (codCargo) 
 ;
 
 -- Table CargoPrograma
@@ -39,7 +37,7 @@ CREATE TABLE CargoPrograma(
 
 -- Add keys for table CargoPrograma
 
-ALTER TABLE CargoPrograma ADD CONSTRAINT Key3 PRIMARY KEY (codPrograma,codCargo)
+ALTER TABLE CargoPrograma ADD CONSTRAINT Key3 PRIMARY KEY (codPrograma,codCargo) 
 ;
 
 -- Table Usuario
@@ -60,7 +58,7 @@ CREATE INDEX IX_Relationship6 ON Usuario (codCargo)
 
 -- Add keys for table Usuario
 
-ALTER TABLE Usuario ADD CONSTRAINT Key5 PRIMARY KEY (codUsuario)
+ALTER TABLE Usuario ADD CONSTRAINT Key5 PRIMARY KEY (codUsuario) 
 ;
 
 -- Table Quarto
@@ -79,7 +77,7 @@ CREATE INDEX IX_Relationship9 ON Quarto (codCategoria)
 
 -- Add keys for table Quarto
 
-ALTER TABLE Quarto ADD CONSTRAINT Key7 PRIMARY KEY (nroQuarto)
+ALTER TABLE Quarto ADD CONSTRAINT Key7 PRIMARY KEY (nroQuarto) 
 ;
 
 -- Table Categoria
@@ -93,7 +91,7 @@ CREATE TABLE Categoria(
 
 -- Add keys for table Categoria
 
-ALTER TABLE Categoria ADD CONSTRAINT Key8 PRIMARY KEY (codCategoria)
+ALTER TABLE Categoria ADD CONSTRAINT Key8 PRIMARY KEY (codCategoria) 
 ;
 
 -- Table ItemConforto
@@ -106,7 +104,7 @@ CREATE TABLE ItemConforto(
 
 -- Add keys for table ItemConforto
 
-ALTER TABLE ItemConforto ADD CONSTRAINT Key9 PRIMARY KEY (codItem)
+ALTER TABLE ItemConforto ADD CONSTRAINT Key9 PRIMARY KEY (codItem) 
 ;
 
 -- Table CategoriaItemConforto
@@ -119,7 +117,7 @@ CREATE TABLE CategoriaItemConforto(
 
 -- Add keys for table CategoriaItemConforto
 
-ALTER TABLE CategoriaItemConforto ADD CONSTRAINT Key10 PRIMARY KEY (codCategoria,codItem)
+ALTER TABLE CategoriaItemConforto ADD CONSTRAINT Key10 PRIMARY KEY (codCategoria,codItem) 
 ;
 
 -- Table Hospede
@@ -134,7 +132,7 @@ CREATE TABLE Hospede(
 
 -- Add keys for table Hospede
 
-ALTER TABLE Hospede ADD CONSTRAINT Key11 PRIMARY KEY (codCPF)
+ALTER TABLE Hospede ADD CONSTRAINT Key11 PRIMARY KEY (codCPF) 
 ;
 
 -- Table Hospedagem
@@ -155,7 +153,7 @@ CREATE INDEX IX_Relationship26 ON Hospedagem (codCPF)
 
 -- Add keys for table Hospedagem
 
-ALTER TABLE Hospedagem ADD CONSTRAINT Key14 PRIMARY KEY (seqHospedagem)
+ALTER TABLE Hospedagem ADD CONSTRAINT Key14 PRIMARY KEY (seqHospedagem) 
 ;
 
 -- Table Servico
@@ -175,7 +173,7 @@ CREATE INDEX IX_Relationship20 ON Servico (codServicoArea)
 
 -- Add keys for table Servico
 
-ALTER TABLE Servico ADD CONSTRAINT Key15 PRIMARY KEY (seqServico)
+ALTER TABLE Servico ADD CONSTRAINT Key15 PRIMARY KEY (seqServico) 
 ;
 
 -- Table ServicoArea
@@ -188,7 +186,7 @@ CREATE TABLE ServicoArea(
 
 -- Add keys for table ServicoArea
 
-ALTER TABLE ServicoArea ADD CONSTRAINT Key16 PRIMARY KEY (codServicoArea)
+ALTER TABLE ServicoArea ADD CONSTRAINT Key16 PRIMARY KEY (codServicoArea)  
 ;
 
 -- Table QuartoConsumo
@@ -213,7 +211,7 @@ CREATE INDEX IX_Relationship17 ON QuartoConsumo (codUsuarioRegistro)
 
 -- Add keys for table QuartoConsumo
 
-ALTER TABLE QuartoConsumo ADD CONSTRAINT Key17 PRIMARY KEY (datConsumo,seqHospedagem,nroQuarto)
+ALTER TABLE QuartoConsumo ADD CONSTRAINT Key17 PRIMARY KEY (datConsumo,seqHospedagem,nroQuarto) 
 ;
 
 -- Table QuartoHospedagem
@@ -229,13 +227,13 @@ CREATE TABLE QuartoHospedagem(
 
 -- Add keys for table QuartoHospedagem
 
-ALTER TABLE QuartoHospedagem ADD CONSTRAINT Key18 PRIMARY KEY (seqHospedagem,nroQuarto)
+ALTER TABLE QuartoHospedagem ADD CONSTRAINT Key18 PRIMARY KEY (seqHospedagem,nroQuarto) 
 ;
+
 -- Create foreign keys (relationships) section -------------------------------------------------
 
 ALTER TABLE CargoPrograma ADD CONSTRAINT Relationship2 FOREIGN KEY (codPrograma) REFERENCES Programa (codPrograma) ON DELETE NO ACTION ON UPDATE CASCADE
 ;
-
 ALTER TABLE CargoPrograma ADD CONSTRAINT Relationship3 FOREIGN KEY (codCargo) REFERENCES Cargo (codCargo) ON DELETE NO ACTION ON UPDATE CASCADE
 ;
 
@@ -244,7 +242,6 @@ ALTER TABLE Usuario ADD CONSTRAINT Relationship6 FOREIGN KEY (codCargo) REFERENC
 
 ALTER TABLE CategoriaItemConforto ADD CONSTRAINT Relationship7 FOREIGN KEY (codCategoria) REFERENCES Categoria (codCategoria) ON DELETE NO ACTION ON UPDATE CASCADE
 ;
-
 ALTER TABLE CategoriaItemConforto ADD CONSTRAINT Relationship8 FOREIGN KEY (codItem) REFERENCES ItemConforto (codItem) ON DELETE NO ACTION ON UPDATE CASCADE
 ;
 
@@ -253,7 +250,6 @@ ALTER TABLE Quarto ADD CONSTRAINT Relationship9 FOREIGN KEY (codCategoria) REFER
 
 ALTER TABLE QuartoConsumo ADD CONSTRAINT Relationship16 FOREIGN KEY (seqServico) REFERENCES Servico (seqServico) ON DELETE NO ACTION ON UPDATE CASCADE
 ;
-
 ALTER TABLE QuartoConsumo ADD CONSTRAINT Relationship17 FOREIGN KEY (codUsuarioRegistro) REFERENCES Usuario (codUsuario) ON DELETE NO ACTION ON UPDATE CASCADE
 ;
 
@@ -262,7 +258,6 @@ ALTER TABLE Servico ADD CONSTRAINT Relationship20 FOREIGN KEY (codServicoArea) R
 
 ALTER TABLE QuartoHospedagem ADD CONSTRAINT Relationship21 FOREIGN KEY (seqHospedagem) REFERENCES Hospedagem (seqHospedagem) ON DELETE NO ACTION ON UPDATE CASCADE
 ;
-
 ALTER TABLE QuartoHospedagem ADD CONSTRAINT Relationship22 FOREIGN KEY (nroQuarto) REFERENCES Quarto (nroQuarto) ON DELETE NO ACTION ON UPDATE CASCADE
 ;
 
@@ -271,6 +266,8 @@ ALTER TABLE QuartoConsumo ADD CONSTRAINT Relationship24 FOREIGN KEY (seqHospedag
 
 ALTER TABLE Hospedagem ADD CONSTRAINT Relationship26 FOREIGN KEY (codCPF) REFERENCES Hospede (codCPF) ON DELETE NO ACTION ON UPDATE CASCADE
 ;
+
+-- CREATE VIEW RELATORIO DESPESAS --
 
 CREATE VIEW relatorioDespesas AS
 SELECT A.seqHospedagem, A.nroQuarto, A.nroAdultos, A.nroCriancas, A.vlrDiaria,
@@ -285,32 +282,37 @@ FROM
 	JOIN QuartoConsumo D ON A.seqHospedagem = D.seqHospedagem AND A.nroQuarto = D.nroQuarto
 	JOIN Servico E ON D.seqServico = E.seqServico;
 
+
+-- INSERT ON PROGRAMA --
+
 INSERT INTO public.programa(codprograma, desprograma)
-    VALUES ('001', 'Tela de Cargos');
-INSERT INTO public.programa(codprograma, desprograma)
-    VALUES ('002', 'Tela de Check-in');
-INSERT INTO public.programa(codprograma, desprograma)
-    VALUES ('003', 'Tela de Check-out');
-INSERT INTO public.programa(codprograma, desprograma)
-    VALUES ('004', 'Tela de Visualização de Detalhes da Conta');
-INSERT INTO public.programa(codprograma, desprograma)
-    VALUES ('005', 'Tela de Lançamento de Despesas');
-INSERT INTO public.programa(codprograma, desprograma)
-    VALUES ('006', 'Tela de Hóspedes');
-INSERT INTO public.programa(codprograma, desprograma)
-    VALUES ('007', 'Tela de Funcionários');
-INSERT INTO public.programa(codprograma, desprograma)
-    VALUES ('008', 'Tela de Itens de Conforto');
-INSERT INTO public.programa(codprograma, desprograma)
-    VALUES ('009', 'Tela de Categorias de Quartos');
-INSERT INTO public.programa(codprograma, desprograma)
-    VALUES ('010', 'Tela de Quartos');
-INSERT INTO public.programa(codprograma, desprograma)
-    VALUES ('011', 'Tela de Áreas de Serviço');
-INSERT INTO public.programa(codprograma, desprograma)
-    VALUES ('012', 'Tela de Serviços');
+    VALUES ('001', 'cargos'),
+        ('002', 'check-in'),
+        ('003', 'check-out'),
+        ('004', 'detalhes-conta'),
+        ('005', 'lancamento-despesas'),
+        ('006', 'hospedes'),
+        ('007', 'funcionarios'),
+        ('008', 'itens-conforto'),
+        ('009', 'categoria-quarto'),
+        ('010', 'quarto'),
+        ('011', 'servico-area'),
+        ('012', 'servicos');
+
+-- INSERT ON CARGO --
 
 INSERT INTO public.cargo(codcargo, nomcargo, idtmaster)
-    VALUES('001', 'Administrador', true);
+    VALUES('001', 'Administrador', true),
+        ('002', 'Zé ninguém', false);
+
+-- INSERT ON CARGO PROGRAMA -- 
+
+INSERT INTO public.cargoprograma(codprograma, codcargo)
+    VALUES ('008', '002'),
+        ('009', '002');
+
+-- INSERT ON USUARIO --
+
 INSERT INTO public.usuario(codusuario, nomusuario, codcargo, dessenha, desemail)
-    VALUES('0001', 'Admin', '001','B7E94BE513E96E8C45CD23D162275E5A12EBDE9100A425C4EBCDD7FA4DCD897C', 'adm@email.com');
+    VALUES('0001', 'O Cara', '001','B7E94BE513E96E8C45CD23D162275E5A12EBDE9100A425C4EBCDD7FA4DCD897C', 'adm@email.com'),
+        ('0002', 'Zé', '002','B7E94BE513E96E8C45CD23D162275E5A12EBDE9100A425C4EBCDD7FA4DCD897C', 'ze@email.com');

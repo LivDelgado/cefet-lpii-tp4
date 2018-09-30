@@ -9,10 +9,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
-import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import javax.faces.context.FacesContext;
 import org.primefaces.event.RowEditEvent;
 
 @ViewScoped
@@ -55,6 +53,8 @@ public class ServicoAreaMB implements Serializable {
         IManterServicoArea manterServicoArea = new ManterServicoAreaProxy();
 
         try {
+            System.out.println("codServicoAreaAlterar => " + codServicoAreaAlterar);
+            System.out.println("servicoAreaaa => " + servicoArea.getNomServicoArea() + " / " + servicoArea.getCodServicoArea());
             boolean testeAlteracao = manterServicoArea.alterar(codServicoAreaAlterar, servicoArea);
             if (testeAlteracao) {
                 ContextUtils.mostrarMensagem("Alteração efetuada", "Registro alterado com sucesso!", true);
@@ -62,6 +62,8 @@ public class ServicoAreaMB implements Serializable {
                 ContextUtils.mostrarMensagem("Falha na alteração", "Falha ao alterar o registro!", true);
             }
         } catch (NegocioException | SQLException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
             ContextUtils.mostrarMensagem("Falha na alteração", ex.getMessage(), true);
             ContextUtils.redireciona(null);
         }
@@ -77,6 +79,7 @@ public class ServicoAreaMB implements Serializable {
         IManterServicoArea manterServicoArea = new ManterServicoAreaProxy();
 
         try {
+            System.out.println("servicoArea => " + servicoArea.getCodServicoArea());
             boolean testeExclusao = manterServicoArea.excluir(servicoArea.getCodServicoArea());
             if (testeExclusao) {
                 ContextUtils.mostrarMensagem("Exclusão efetuada", "Registro excluído com sucesso!", true);
