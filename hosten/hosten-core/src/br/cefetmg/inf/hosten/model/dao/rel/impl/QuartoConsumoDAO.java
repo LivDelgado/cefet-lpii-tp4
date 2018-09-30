@@ -50,7 +50,9 @@ public class QuartoConsumoDAO implements IQuartoConsumoDAO {
                 + "FROM QuartoConsumo "
                 + "WHERE " + coluna + " = ?";
 
-        PreparedStatement pStmt = con.prepareStatement(qry);
+        PreparedStatement pStmt = con.prepareStatement(qry, 
+                ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
         if (dadoBusca instanceof String) {
             pStmt.setString(1, dadoBusca.toString());
         } else {

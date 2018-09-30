@@ -120,7 +120,8 @@ public class ManterUsuario implements IManterUsuario {
             throws NegocioException, SQLException {
         // testa se o codUsuario é usado em QuartoConsumo
         IQuartoConsumoDAO dao = QuartoConsumoDAO.getInstance();
-        List<QuartoConsumo> listaQuartoConsumo = dao.busca(codRegistro, "codUsuario");
+        List<QuartoConsumo> listaQuartoConsumo = dao.busca(codRegistro, "codUsuarioRegistro");
+        
         if (listaQuartoConsumo.isEmpty()) {
             // não é usado em quarto consumo
             // pode excluir
