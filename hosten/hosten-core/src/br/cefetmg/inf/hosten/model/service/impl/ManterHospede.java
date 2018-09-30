@@ -129,13 +129,6 @@ public class ManterHospede implements IManterHospede {
             throw new NegocioException("CPF repetido!");
         }
     }
-
-    @Override
-    public boolean excluir(String codRegistro)
-            throws NegocioException, SQLException {
-        //TODO
-        return false;
-    }
     
     @Override
     public List<Hospede> listar(Object dadoBusca, String coluna)

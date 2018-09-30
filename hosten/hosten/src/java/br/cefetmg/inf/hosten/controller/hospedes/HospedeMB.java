@@ -67,27 +67,7 @@ public class HospedeMB implements Serializable {
     public void onRowCancel(RowEditEvent event) {
         ContextUtils.mostrarMensagem("Edição Cancelada", ((Hospede) event.getObject()).getCodCPF(), false);
     }
-    
-    public String excluir(Hospede hospede) {
-        this.hospede = hospede;
         
-        IManterHospede manterHospede = new ManterHospedeProxy();
-        
-        try {
-            boolean testeExclusao = manterHospede.excluir(hospede.getCodCPF());
-            if (testeExclusao) {
-                ContextUtils.mostrarMensagem("Exclusão efetuada", "Registro excluído com sucesso!", true);
-                return "sucesso";
-            } else {
-                ContextUtils.mostrarMensagem("Falha na exclusão", "Falha ao excluir o registro!", true);
-                return "falha";
-            }
-        } catch (NegocioException | SQLException ex) {
-            ContextUtils.mostrarMensagem("Falha na exclusão", ex.getMessage(), true);
-            return "falha";
-        }    
-    }
-    
     public String inserir() {
         IManterHospede manterHospede = new ManterHospedeProxy();
         

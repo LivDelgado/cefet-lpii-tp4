@@ -34,14 +34,22 @@
                         <p:column headerText="Nome" sortBy="#{hospede.nomHospede}" filterBy="#{hospede.nomHospede}" filterStyle="width: 80%" style="text-align: center">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{hospede.nomHospede}"/></f:facet>
-                                <f:facet name="input"><p:inputText value="#{hospede.nomHospede}" required="true" requiredMessage="Campo obrigatório" style="width: 77%"/></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{hospede.nomHospede}" required="true" requiredMessage="Campo obrigatório" validatorMessage="Nome inválido" style="width: 77%">
+                                        <f:validateRegex pattern="^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$"/>
+                                    </p:inputText>
+                                </f:facet>
                             </p:cellEditor>
                         </p:column>
                         
                         <p:column headerText="Email" sortBy="#{hospede.desEmail}" filterBy="#{hospede.desEmail}" filterStyle="width: 80%" style="text-align: center">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{hospede.desEmail}"/></f:facet>
-                                <f:facet name="input"><p:inputText value="#{hospede.desEmail}" required="true" requiredMessage="Campo obrigatório" style="width: 77%"/></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{hospede.desEmail}" required="true" requiredMessage="Campo obrigatório" validatorMessage="Email inválido" style="width: 77%">
+                                        <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+                                    </p:inputText>
+                                </f:facet>
                             </p:cellEditor>
                         </p:column>
                         
@@ -54,19 +62,6 @@
 
                         <p:column headerText="Editar" style="width: 55px">
                             <p:rowEditor />
-                        </p:column>
-
-                        <p:column headerText="Excluir" style="text-align: center; width: 55px">
-
-                            <p:commandButton title="Excluir" icon="ui-icon-trash" action="#{hospedeMB.excluir(hospede)}" update=":formRegistro:msgs">
-                                <p:confirm header="Confirmação" message="Deseja realmente excluir o registro?" icon="ui-icon-alert" />
-                            </p:commandButton>
-
-                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                <p:commandButton value="Excluir" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                                <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                            </p:confirmDialog>
-
                         </p:column>
                     </p:dataTable>
                 </h:form>
@@ -96,6 +91,7 @@
                                          requiredMessage="Campo obrigatório" validatorMessage="Nome inválido"
                                          title="Nome do hóspede com máximo de 90 caracteres">
                                 <f:validateLength maximum="90"/>
+                                <f:validateRegex pattern="^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$"/>
                             </p:inputText>
                             <p:tooltip id="nomHospedeTip" for="nomHospede" showEvent="focus" hideEvent="blur" />
                             <p:message for="nomHospede"/>
@@ -105,6 +101,7 @@
                                          requiredMessage="Campo obrigatório" validatorMessage="Email inválido"
                                          title="Email do hóspede com máximo de 90 caracteres">
                                 <f:validateLength maximum="90"/>
+                                <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
                             </p:inputText>
                             <p:tooltip id="desEmailTip" for="desEmail" showEvent="focus" hideEvent="blur" />
                             <p:message for="desEmail"/>

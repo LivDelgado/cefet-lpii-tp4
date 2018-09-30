@@ -70,20 +70,6 @@ public class ManterHospedeProxy implements IManterHospede {
             throw new NegocioException(ex.getMessage());
         }
     }
-
-    @Override
-    public boolean excluir(String codRegistro) throws NegocioException, SQLException {
-        ArrayList lista = new ArrayList();
-        lista.add("Hospede");
-        lista.add("Excluir");
-        lista.add(codRegistro);
-        
-        try {
-            return (boolean)operacaoRegistro(lista);
-        } catch (Exception ex) {
-            throw new NegocioException(ex.getMessage());
-        }
-    }
     
     public Object operacaoRegistro (ArrayList lista) throws Exception {
         try {
