@@ -29,7 +29,7 @@
 
                         <p:column headerText="Código" sortBy="#{cargo.codCargo}" 
                                   filterBy="#{cargo.codCargo}" filterStyle="width: 80%" style="text-align: center">
-                                <h:outputText value="#{cargo.codCargo}"/>
+                            <h:outputText value="#{cargo.codCargo}"/>
                         </p:column>
 
                         <p:column headerText="Nome" sortBy="#{cargo.nomCargo}" 
@@ -39,7 +39,12 @@
                                     <h:outputText value="#{cargo.nomCargo}"/>
                                 </f:facet>
                                 <f:facet name="input">
-                                    <p:inputText value="#{cargo.nomCargo}" style="width: 77%"/>
+                                    <p:inputText id="nomCargo" value="#{cargo.nomCargo}" required="true" style="width: 77%"
+                                                 requiredMessage="Campo obrigatório" validatorMessage="Nome inválido"
+                                                 title="Nome do cargo com máximo de 40 caracteres">
+                                        <f:validateLength maximum="40"/>
+                                    </p:inputText>
+                                    <p:tooltip id="nomCargoTip" for="nomCargo" showEvent="focus" hideEvent="blur" />
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>

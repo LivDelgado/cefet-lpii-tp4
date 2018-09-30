@@ -29,7 +29,7 @@
 
                         <p:column headerText="Código" sortBy="#{categoria.codCategoria}" 
                                   filterBy="#{categoria.codCategoria}" filterStyle="width: 80%" style="text-align: center">
-                                <h:outputText value="#{categoria.codCategoria}"/>
+                            <h:outputText value="#{categoria.codCategoria}"/>
                         </p:column>
 
                         <p:column headerText="Nome" sortBy="#{categoria.nomCategoria}" 
@@ -39,7 +39,12 @@
                                     <h:outputText value="#{categoria.nomCategoria}"/>
                                 </f:facet>
                                 <f:facet name="input">
-                                    <p:inputText value="#{categoria.nomCategoria}" style="width: 77%"/>
+                                    <p:inputText id="nomCategoria" value="#{categoria.nomCategoria}" required="true" 
+                                                 requiredMessage="Campo obrigatório" validatorMessage="Nome inválido"
+                                                 title="Nome da categoria com máximo de 40 caracteres">
+                                        <f:validateLength maximum="40"/>
+                                    </p:inputText>
+                                    <p:tooltip id="nomCategoriaTip" for="nomCategoria" showEvent="focus" hideEvent="blur" />
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
@@ -51,7 +56,12 @@
                                     <h:outputText value="#{categoria.vlrDiaria}"/>
                                 </f:facet>
                                 <f:facet name="input">
-                                    <p:inputText value="#{categoria.vlrDiaria}" style="width: 77%"/>
+                                    <p:inputNumber id="vlrDiaria" value="#{categoria.vlrDiaria}" required="true" style="width: 77%"
+                                                   requiredMessage="Campo obrigatório" validatorMessage="Valor da diária inválido" 
+                                                   title="Quantia de no máximo R$99.999,99">
+                                        <f:validateDoubleRange minimum="0.00" maximum="99999.99" />
+                                    </p:inputNumber>
+                                    <p:tooltip id="vlrDiariaTip" for="vlrDiaria" showEvent="focus" hideEvent="blur" />
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>

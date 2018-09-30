@@ -34,7 +34,14 @@
                         <p:column headerText="Descrição" sortBy="#{item.desItem}" filterBy="#{item.desItem}" filterStyle="width: 80%" style="text-align: center">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{item.desItem}"/></f:facet>
-                                <f:facet name="input"><p:inputText value="#{item.desItem}" required="true" requiredMessage="Campo obrigatório" style="width: 77%"/></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText id="desItem" value="#{item.desItem}" required="true" style="width: 77%"
+                                                 requiredMessage="Campo obrigatório" validatorMessage="Descrição inválida"
+                                                 title="Descrição do item com máximo de 40 caracteres">
+                                        <f:validateLength maximum="40"/>
+                                    </p:inputText>
+                                    <p:tooltip id="desItemTip" for="desItem" showEvent="focus" hideEvent="blur" />
+                                </f:facet>
                             </p:cellEditor>
                         </p:column>
 

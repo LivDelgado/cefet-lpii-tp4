@@ -95,7 +95,7 @@ public class FuncionarioMB implements Serializable {
     }
 
     public void onRowCancel(RowEditEvent event) {
-        ContextUtils.mostrarMensagem("Edição Cancelada", ((CategoriaQuarto) event.getObject()).getCodCategoria(), false);
+        ContextUtils.mostrarMensagem("Edição Cancelada", ((Usuario) event.getObject()).getCodUsuario(), false);
     }
 
     public String excluir(Usuario funcionario) {

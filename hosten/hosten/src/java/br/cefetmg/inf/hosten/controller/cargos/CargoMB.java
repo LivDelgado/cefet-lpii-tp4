@@ -86,7 +86,7 @@ public class CargoMB implements Serializable {
     }
 
     public void onRowCancel(RowEditEvent event) {
-        ContextUtils.mostrarMensagem("Edição Cancelada", ((CategoriaQuarto) event.getObject()).getCodCategoria(), false);
+        ContextUtils.mostrarMensagem("Edição Cancelada", ((Cargo) event.getObject()).getCodCargo(), false);
     }
 
     public String excluir(Cargo cargo) {
