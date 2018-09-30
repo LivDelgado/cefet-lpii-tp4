@@ -2,7 +2,6 @@ package br.cefetmg.inf.hosten.model.dao.impl;
 
 import br.cefetmg.inf.hosten.model.dao.IUsuarioDAO;
 import br.cefetmg.inf.hosten.model.domain.Usuario;
-import br.cefetmg.inf.hosten.model.service.impl.ManterUsuario;
 import br.cefetmg.inf.util.SenhaUtils;
 import br.cefetmg.inf.util.bd.ConnectionFactory;
 import java.io.UnsupportedEncodingException;
@@ -14,8 +13,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class UsuarioDAO implements IUsuarioDAO {
 
@@ -130,7 +127,8 @@ public class UsuarioDAO implements IUsuarioDAO {
         pStmt.setString(1, usuarioAtualizado.getCodUsuario());
         pStmt.setString(2, usuarioAtualizado.getNomUsuario());
         pStmt.setString(3, usuarioAtualizado.getCodCargo());
-        pStmt.setString(4, usuarioAtualizado.getDesSenha());
+        pStmt.setString(4, SenhaUtils
+                .stringParaSHA256(usuarioAtualizado.getDesSenha()));
         pStmt.setString(5, usuarioAtualizado.getDesEmail());
         if (pK instanceof String) {
             pStmt.setString(6, pK.toString());

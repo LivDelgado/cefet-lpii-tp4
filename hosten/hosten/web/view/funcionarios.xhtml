@@ -29,7 +29,7 @@
 
                         <p:column headerText="Código" sortBy="#{funcionario.codUsuario}" 
                                   filterBy="#{funcionario.codUsuario}" filterStyle="width: 80%" style="text-align: center">
-                                <h:outputText value="#{funcionario.codUsuario}"/>
+                            <h:outputText value="#{funcionario.codUsuario}"/>
                         </p:column>
 
                         <p:column headerText="Nome" sortBy="#{funcionario.nomUsuario}" 
@@ -51,15 +51,15 @@
                                 </f:facet>
                                 <f:facet name="input">
                                     <p:selectOneMenu id="codCargo" value="#{funcionarioMB.cargoSelecionado}" label="Itens" 
-                                                          filter="true" filterMatchMode="startsWith" panelStyle="width:250px" 
-                                                          converter="cargoConverter">
-                                        <f:selectItems value="#{cargoMB.listaCargos}" var="cargo" itemLabel="#{cargo.nomCargo}" itemValue="#{cargo.codCargo}"/>
+                                                     filter="true" filterMatchMode="startsWith" panelStyle="width:250px" 
+                                                     converter="cargoConverter">
+                                        <f:selectItems value="#{cargoMB.listaCargos}" var="cargo" itemLabel="#{cargo.nomCargo}" itemValue="#{cargo}"/>
                                     </p:selectOneMenu>
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
 
-                        
+
                         <p:column headerText="Email" sortBy="#{funcionario.desEmail}" 
                                   filterBy="#{funcionario.desEmail}" filterStyle="width: 80%" style="text-align: center">
                             <p:cellEditor>
@@ -138,7 +138,7 @@
 
                             <h:outputLabel for="codCargo" value="Cargo" />
                             <p:selectOneMenu id="cargo" value="#{funcionarioMB.cargoSelecionado}" label="Cargos" 
-                                                  filter="true" filterMatchMode="startsWith" panelStyle="width:250px" converter="cargoConverter">
+                                             filter="true" filterMatchMode="startsWith" panelStyle="width:250px" converter="cargoConverter">
                                 <f:selectItems value="#{cargoMB.listaCargos}" var="cargo" itemLabel="#{cargo.nomCargo}" itemValue="#{cargo}"/>
                             </p:selectOneMenu>
 
@@ -154,16 +154,16 @@
 
                             <h:outputLabel for="desSenha" value="Senha" />
                             <p:password id="desSenha" value="#{funcionarioMB.funcionario.desSenha}" required="true" 
-                                         requiredMessage="Campo obrigatório" validatorMessage="Senha inválida"
-                                         title="Senha do funcionário"/>
+                                        requiredMessage="Campo obrigatório" validatorMessage="Senha inválida"
+                                        title="Senha do funcionário"/>
                             <p:tooltip id="desSenhaTip" for="nomUsuario" showEvent="focus" hideEvent="blur" />
                             <p:message for="desSenha"/>
-                            
+
                             <p:commandButton value="Inserir" action="#{funcionarioMB.inserir}" onclick="PF('modalInsercao').hide();" update="msgi"/>
                         </p:panelGrid>
                     </h:form>
                 </p:dialog>
-                
+
             </ui:define>
         </ui:composition>
     </h:body>
