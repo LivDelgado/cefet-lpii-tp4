@@ -24,6 +24,7 @@
                         </f:facet>
 
                         <f:attribute name="categoriaEditar" value="#{categoria.codCategoria}" />
+                        <p:ajax event="rowEditInit" listener="#{categoriaMB.onRowInit}" />
                         <p:ajax event="rowEdit" listener="#{categoriaMB.onRowEdit}" update=":formRegistro:msgs" />
                         <p:ajax event="rowEditCancel" listener="#{categoriaMB.onRowCancel}" update=":formRegistro:msgs" />
 
@@ -50,16 +51,16 @@
 
                         <p:column headerText="Itens de conforto" style="text-align: center">
                             <p:cellEditor>
-                                <c:forEach items="${categoriaMB.itensSelecionadosArray}" var="reg">
-                                    <c:set var="descricoes" value="${descricoes + reg.desItem}" />
-                                </c:forEach>
-
-                                <f:facet name="output"><h:outputText value="${viewScope[descricoes]}"/></f:facet>
+                                <f:facet name="output">
+                                    <p:dataList value="#{categoriaMB.getItensRelacionados(categoria)}" var="reg">
+                                        <h:outputText value="#{reg.codItem}, #{reg.desItem}" style="display:inline-block"/>                                        
+                                    </p:dataList>
+                                </f:facet>
                                 <f:facet name="input">
                                     <p:selectCheckboxMenu id="itens" value="#{categoriaMB.itensSelecionadosArray}" label="Itens" 
-                                                          filter="true" filterMatchMode="startsWith" panelStyle="width:250px"
-                                                          converter="itemConfortoConverter">
-                                        <f:selectItems value="#{itemMB.listaItens}" />
+                                                          filter="true" filterMatchMode="startsWith" panelStyle="width:250px" converter="itemConfortoConverter">
+                                        <f:param name="categoriaAtual" value="#{categoria.codCategoria}" />
+                                        <f:selectItems value="#{itemMB.listaItens}" var="item" itemLabel="#{item.desItem}" itemValue="#{item}"/>
                                     </p:selectCheckboxMenu>
                                 </f:facet>
                             </p:cellEditor>

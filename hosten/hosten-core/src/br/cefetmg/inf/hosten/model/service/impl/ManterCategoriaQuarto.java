@@ -99,7 +99,7 @@ public class ManterCategoriaQuarto implements IManterCategoriaQuarto {
             throw new NegocioException("O valor da diária ultrapassou valor máximo de R$ 9999999,99.");
         }
 
-        List<CategoriaQuarto> buscaRegistroAntigo = listar(codRegistro, "codCategoriaQuarto");
+        List<CategoriaQuarto> buscaRegistroAntigo = listar(codRegistro, "codCategoria");
         CategoriaQuarto registroAntigo = buscaRegistroAntigo.get(0);
 
         // pesquisa para saber se há alguma categoria já 

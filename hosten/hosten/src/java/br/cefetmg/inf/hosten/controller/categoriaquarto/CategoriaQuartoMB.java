@@ -14,7 +14,6 @@ import java.util.Arrays;
 import java.util.List;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import javax.faces.context.FacesContext;
 import org.primefaces.event.RowEditEvent;
 
 @ViewScoped
@@ -25,6 +24,9 @@ public class CategoriaQuartoMB implements Serializable {
     private CategoriaQuarto categoria;
 
     private ItemConforto[] itensSelecionados;
+
+    private List<ItemConforto> itensRelacionados;
+    private String codCategoriaAlterar;
 
     public CategoriaQuartoMB() {
         categoria = new CategoriaQuarto(null, null, null);
@@ -52,9 +54,11 @@ public class CategoriaQuartoMB implements Serializable {
         this.categoria = categoria;
     }
 
+    public void onRowInit(RowEditEvent event) {
+        codCategoriaAlterar = (String) event.getComponent().getAttributes().get("categoriaEditar");           
+    }
+    
     public void onRowEdit(RowEditEvent event) throws IOException {
-        String codCategoriaAlterar = (String) event.getComponent().getAttributes().get("categoriaEditar");
-
         categoria = (CategoriaQuarto) event.getObject();
 
         List<ItemConforto> listaItens = new ArrayList();
@@ -126,6 +130,31 @@ public class CategoriaQuartoMB implements Serializable {
 
     public void setItensSelecionadosArray(ItemConforto[] itensSelecionadosArray) {
         this.itensSelecionados = itensSelecionadosArray;
+    }
+
+    public List<ItemConforto> getItensRelacionados(CategoriaQuarto categoria) {
+        IManterCategoriaQuarto manterCategoria = new ManterCategoriaQuartoProxy();
+
+        try {
+            itensRelacionados = manterCategoria.listarItensRelacionados(categoria.getCodCategoria());
+            if (itensRelacionados != null) {
+                System.out.println("tamanho da lista de itens relacionados à categoria " + categoria.getNomCategoria() + ": " + itensRelacionados.size());
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            //
+            //
+            //
+        }
+        return itensRelacionados;
+    }
+
+    public List<ItemConforto> getItensRelacionados() {
+        return itensRelacionados;
+    }
+
+    public void setItensRelacionados(List<ItemConforto> itensRelacionados) {
+        this.itensRelacionados = itensRelacionados;
     }
 
 }
