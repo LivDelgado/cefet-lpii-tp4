@@ -14,7 +14,7 @@
         <h:form>
             <p:commandButton id="dynaButton" value="Menu" type="button" icon="ui-icon-extlink"/>
             <p:tieredMenu overlay="true" trigger="dynaButton" my="left top" at="left bottom" style="width:180px">
-                <p:menuitem value="Cargos" />
+                <p:menuitem value="Cargos" outcome="/view/cargos.jsf"/>
                 <p:menuitem value="Funcionários" />
                 <p:menuitem value="Hóspedes" />
                 <p:submenu label="Quartos">
@@ -27,7 +27,7 @@
                     <p:menuitem value="Visualizar serviços" />
                     <p:menuitem value="Visualizar áreas de serviço" outcome="/view/servico-area.jsf"/>
                 </p:submenu>
-                <p:menuitem value="Logout" />
+                <p:menuitem value="Logout" action="#{loginMB.efetuaLogout}" />
             </p:tieredMenu>
         </h:form>
 

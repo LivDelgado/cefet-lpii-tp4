@@ -55,6 +55,8 @@ public class ManterCargo implements IManterCargo {
                     throw new NegocioException("Não é possível adicionar um cargo que não tem acesso a nenhuma tela.");
                 }
 
+                // adiciona o cargo
+                boolean testeRegistro = objetoDAO.adicionaCargo(cargo);
                 // cria os relacionamentos
                 ICargoProgramaDAO relDAO = CargoProgramaDAO.getInstance();
                 for (String codPrograma : listaProgramas) {
@@ -62,8 +64,6 @@ public class ManterCargo implements IManterCargo {
                     relDAO.adiciona(rel);
                 }
 
-                // adiciona o cargo
-                boolean testeRegistro = objetoDAO.adicionaCargo(cargo);
                 return testeRegistro;
             } else {
                 // tem cargo com o mesmo nome
@@ -196,7 +196,6 @@ public class ManterCargo implements IManterCargo {
     @Override
     public List<Programa> listarProgramasRelacionados(String codCargo) 
             throws NegocioException, SQLException {
-        System.out.println("ASDAASDASDASDSAD");
         if(codCargo != null) {
             ICargoProgramaDAO cargoProgramaDAO = CargoProgramaDAO.getInstance();
             List<Programa> lista = cargoProgramaDAO.buscaProgramasRelacionados(codCargo); 

@@ -95,5 +95,32 @@
             <to-view-id>/view/servico-area.jsf</to-view-id>
             <redirect/>
         </navigation-case>
+
+        <!-- Cargo -->
+        <navigation-case>
+            <from-action>#{cargoMB.excluir(cargo)}</from-action>
+            <from-outcome>falha</from-outcome>
+            <to-view-id>/view/cargos.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{cargoMB.excluir(cargo)}</from-action>
+            <from-outcome>sucesso</from-outcome>
+            <to-view-id>/view/cargos.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{cargoMB.inserir}</from-action>
+            <from-outcome>falha</from-outcome>
+            <to-view-id>/view/cargos.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{cargoMB.inserir}</from-action>
+            <from-outcome>sucesso</from-outcome>
+            <to-view-id>/view/cargos.jsf</to-view-id>
+            <redirect/>
+        </navigation-case>
+        
     </navigation-rule>
 </faces-config>

@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" >
+    <h:head>
+        <title>Hosten - Cargos</title>
+    </h:head>
+    <h:body>
+
+        <ui:composition template="../template.xhtml">
+
+            <ui:define name="content">
+
+                <h:form id="formRegistro"> 
+                    <p:growl id="msgs" showDetail="true"/>
+
+                    <p:dataTable id="registros" var="cargo" value="#{cargoMB.listaCargos}" editable="true">
+                        <f:facet name="header">
+                            <h:outputText value="Cargos" style="font-size: 25px"/>
+                        </f:facet>
+
+                        <f:attribute name="cargoEditar" value="#{cargo.codCargo}" />
+                        <p:ajax event="rowEditInit" listener="#{cargoMB.onRowInit}" />
+                        <p:ajax event="rowEdit" listener="#{cargoMB.onRowEdit}" update=":formRegistro:msgs" />
+                        <p:ajax event="rowEditCancel" listener="#{cargoMB.onRowCancel}" update=":formRegistro:msgs" />
+
+                        <p:column headerText="Código" sortBy="#{cargo.codCargo}" 
+                                  filterBy="#{cargo.codCargo}" filterStyle="width: 80%" style="text-align: center">
+                                <h:outputText value="#{cargo.codCargo}"/>
+                        </p:column>
+
+                        <p:column headerText="Nome" sortBy="#{cargo.nomCargo}" 
+                                  filterBy="#{cargo.nomCargo}" filterStyle="width: 80%" style="text-align: center">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{cargo.nomCargo}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{cargo.nomCargo}" style="width: 77%"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Programas" style="text-align: center">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <p:dataList value="#{cargoMB.getProgramasRelacionados(cargo)}" var="reg">
+                                        <h:outputText value="#{reg.desPrograma}" style="display:inline-block"/>                                        
+                                    </p:dataList>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:selectCheckboxMenu id="itens" value="#{cargoMB.programasSelecionados}" label="Programas" 
+                                                          filter="true" filterMatchMode="startsWith" panelStyle="width:250px" 
+                                                          converter="programaConverter">
+                                        <f:selectItems value="#{programaMB.listaProgramas}" var="programa" itemLabel="#{programa.desPrograma}" itemValue="#{programa}"/>
+                                    </p:selectCheckboxMenu>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Editar" style="width: 55px">
+                            <p:rowEditor />
+                        </p:column>
+
+                        <p:column headerText="Excluir" style="text-align: center; width: 55px">
+
+                            <p:commandButton title="Excluir" icon="ui-icon-trash" 
+                                             action="#{cargoMB.excluir(cargo)}" update=":formRegistro:msgs">
+                                <p:confirm header="Confirmação" message="Deseja realmente excluir o registro?" icon="ui-icon-alert" />
+                            </p:commandButton>
+
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Excluir" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+
+                <h:form>
+                    <h:panelGrid columns="1" cellpadding="5">
+                        <p:commandButton title="Novo Cargo" icon="ui-icon-circle-plus" type="button" onclick="PF('modalInsercao').show();" />
+                    </h:panelGrid>
+                </h:form>
+
+                <p:dialog header="Inserir" widgetVar="modalInsercao" minHeight="40">
+                    <h:form>
+                        <p:growl id="msgi" showDetail="true"/>
+
+                        <p:panelGrid columns="2">
+                            <h:outputLabel for="codCargo" value="Código" />
+                            <p:inputText id="codCargo" value="#{cargoMB.cargo.codCargo}" required="true" 
+                                         requiredMessage="Campo obrigatório" validatorMessage="Código inválido" 
+                                         title="Código de 3 caracteres">
+                                <f:validateLength minimum="3" maximum="3"/>
+                            </p:inputText>
+                            <p:tooltip id="codCargoTip" for="codCargo" showEvent="focus" hideEvent="blur" />
+                            <p:message for="codCargo"/>
+
+                            <h:outputLabel for="nomCargo" value="Nome" />
+                            <p:inputText id="nomCargo" value="#{cargoMB.cargo.nomCargo}" required="true" 
+                                         requiredMessage="Campo obrigatório" validatorMessage="Nome inválido"
+                                         title="Nome do cargo com máximo de 40 caracteres">
+                                <f:validateLength maximum="40"/>
+                            </p:inputText>
+                            <p:tooltip id="nomCargoTip" for="nomCargo" showEvent="focus" hideEvent="blur" />
+                            <p:message for="nomCargo"/>
+
+                            <h:outputLabel for="programas" value="Programas" />
+                            <p:selectCheckboxMenu id="programas" value="#{cargoMB.programasSelecionados}" label="Programas" 
+                                                  filter="true" filterMatchMode="startsWith" panelStyle="width:250px" converter="programaConverter"
+                                                  multiple="true">
+                                <f:selectItems value="#{programaMB.listaProgramas}" var="programa" itemLabel="#{programa.desPrograma}" itemValue="#{programa}"/>
+                            </p:selectCheckboxMenu>
+
+                            <p:commandButton value="Inserir" action="#{cargoMB.inserir}" onclick="PF('modalInsercao').hide();" update="msgi"/>
+                        </p:panelGrid>
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
