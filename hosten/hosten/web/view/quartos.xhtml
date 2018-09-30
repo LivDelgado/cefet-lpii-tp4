@@ -39,7 +39,13 @@
                                     <h:outputText value="#{quarto.codCategoria}"/>
                                 </f:facet>
                                 <f:facet name="input">
-                                    <p:inputText value="#{quarto.codCategoria}" required="true" requiredMessage="Campo obrigatório" style="width: 77%"/>
+                                    <p:selectOneMenu id="categorias" value="#{quarto.codCategoria}" 
+                                                     panelStyle="width:180px" style="width:160px" 
+                                                     filter="true" filterMatchMode="startsWith"
+                                                     required="true" requiredMessage="Campo obrigatório">
+                                        <f:selectItems value="#{categoriaMB.listaCategorias}" var="categoria" 
+                                                       itemLabel="#{categoria.codCategoria}, #{categoria.nomCategoria}" itemValue="#{categoria.codCategoria}" />
+                                    </p:selectOneMenu>
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>

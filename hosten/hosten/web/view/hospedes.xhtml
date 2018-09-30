@@ -56,7 +56,10 @@
                         <p:column headerText="Telefone" sortBy="#{hospede.desTelefone}" filterBy="#{hospede.desTelefone}" filterStyle="width: 80%" style="text-align: center">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{hospede.desTelefone}"/></f:facet>
-                                <f:facet name="input"><p:inputText value="#{hospede.desTelefone}" required="true" requiredMessage="Campo obrigatório" style="width: 77%"/></f:facet>
+                                <f:facet name="input">
+                                    <p:inputMask id="desTelefone" value="#{hospede.desTelefone}" mask="(999)9999-9999" style="width: 77%"
+                                                 requiredMessage="Campo obrigatório" validatorMessage="Telefone inválido"/>
+                                </f:facet>
                             </p:cellEditor>
                         </p:column>
 
@@ -78,18 +81,15 @@
 
                         <p:panelGrid columns="2">
                             <h:outputLabel for="codCPF" value="CPF" />
-                            <p:inputText id="codCPF" value="#{hospedeMB.hospede.codCPF}" required="true" 
-                                         requiredMessage="Campo obrigatório" validatorMessage="CPF inválido" 
-                                         title="Código de 11 caracteres">
-                                <f:validateLength minimum="11" maximum="11"/>
-                            </p:inputText>
+                            <p:inputMask id="codCPF" value="#{hospedeMB.hospede.codCPF}" required="true" 
+                                         title="Código de 11 caracteres" mask="999.999.999-99"/>
                             <p:tooltip id="codCPFTip" for="codCPF" showEvent="focus" hideEvent="blur" />
                             <p:message for="codCPF"/>
 
                             <h:outputLabel for="nomHospede" value="Nome" />
                             <p:inputText id="nomHospede" value="#{hospedeMB.hospede.nomHospede}" required="true" 
                                          requiredMessage="Campo obrigatório" validatorMessage="Nome inválido"
-                                         title="Nome do hóspede com máximo de 90 caracteres">
+                                         title="Nome do hóspede com máximo de 90 caracteres" maxlength="90">
                                 <f:validateLength maximum="90"/>
                                 <f:validateRegex pattern="^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$"/>
                             </p:inputText>
@@ -99,7 +99,7 @@
                             <h:outputLabel for="desEmail" value="Email" />
                             <p:inputText id="desEmail" value="#{hospedeMB.hospede.desEmail}" required="true" 
                                          requiredMessage="Campo obrigatório" validatorMessage="Email inválido"
-                                         title="Email do hóspede com máximo de 90 caracteres">
+                                         title="Email do hóspede com máximo de 90 caracteres" maxlength="90">
                                 <f:validateLength maximum="90"/>
                                 <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
                             </p:inputText>
@@ -107,11 +107,8 @@
                             <p:message for="desEmail"/>
                             
                             <h:outputLabel for="desTelefone" value="Telefone" />
-                            <p:inputText id="desTelefone" value="#{hospedeMB.hospede.desTelefone}" required="true" 
-                                         requiredMessage="Campo obrigatório" validatorMessage="Telefone inválido"
-                                         title="Telefone do hóspede com máximo de 15 caracteres">
-                                <f:validateLength maximum="15"/>
-                            </p:inputText>
+                            <p:inputMask id="desTelefone" value="#{hospedeMB.hospede.desTelefone}" mask="(999)9999-9999"
+                                         requiredMessage="Campo obrigatório" validatorMessage="Telefone inválido"/>
                             <p:tooltip id="desTelefoneTip" for="desTelefone" showEvent="focus" hideEvent="blur" />
                             <p:message for="desTelefone"/>
 

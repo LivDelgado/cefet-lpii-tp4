@@ -49,18 +49,9 @@ public class ManterQuarto implements IManterQuarto {
             throw new NegocioException("Número do quarto inválido.");
         }
 
-        // confere se já existe algum quarto com aquele número
-        List<Quarto> quartosPesquisados
-                = listar(quarto.getNroQuarto(), "nroQuarto");
-
-        if (quartosPesquisados.isEmpty() || (codRegistro.equals(quarto.getNroQuarto()))) {
-            // pode atualizar
             boolean testeRegistro = objetoDAO.atualizaQuarto(codRegistro, quarto);
+
             return testeRegistro;
-        } else {
-            // tem quarto com o mesmo número
-            throw new NegocioException("Número do quarto repetido!");
-        }
     }
 
     @Override

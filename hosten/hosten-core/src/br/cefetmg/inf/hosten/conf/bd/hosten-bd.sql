@@ -123,9 +123,9 @@ ALTER TABLE CategoriaItemConforto ADD CONSTRAINT Key10 PRIMARY KEY (codCategoria
 -- Table Hospede
 
 CREATE TABLE Hospede(
- codCPF Character(11) NOT NULL,
+ codCPF Character(14) NOT NULL,
  nomHospede Character varying(90) NOT NULL,
- desTelefone Character varying(15) NOT NULL,
+ desTelefone Character varying(14) NOT NULL,
  desEmail Character varying(90) NOT NULL
 )
 ;
@@ -297,7 +297,8 @@ INSERT INTO public.programa(codprograma, desprograma)
         ('009', 'categoria-quarto'),
         ('010', 'quartos'),
         ('011', 'servico-area'),
-        ('012', 'servicos');
+        ('012', 'servicos'),
+        ('013', 'estado-quarto');
 
 -- INSERT ON CARGO --
 

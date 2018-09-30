@@ -106,11 +106,7 @@ public class QuartoDAO implements IQuartoDAO {
         pStmt.setInt(1, quartoAtualizado.getNroQuarto());
         pStmt.setString(2, quartoAtualizado.getCodCategoria());
         pStmt.setBoolean(3, quartoAtualizado.isIdtOcupado());
-        if (pK instanceof String) {
-            pStmt.setString(4, pK.toString());
-        } else {
-            pStmt.setInt(4, Integer.parseInt(pK.toString()));
-        }
+        pStmt.setInt(4, Integer.parseInt(pK.toString()));
 
         return pStmt.executeUpdate() > 0;
     }

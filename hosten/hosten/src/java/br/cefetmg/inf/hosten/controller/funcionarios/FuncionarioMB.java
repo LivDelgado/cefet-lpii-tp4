@@ -145,6 +145,4 @@ public class FuncionarioMB implements Serializable {
     public void setCargoSelecionado(Cargo cargoSelecionado) {
         this.cargoSelecionado = cargoSelecionado;
     }
-
-
 }

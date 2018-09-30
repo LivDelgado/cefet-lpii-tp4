@@ -110,19 +110,19 @@ public class ManterQuartoProxy implements IManterQuarto {
             ArrayList listaRecebida = ((ArrayList)retornoCallableClient.get());
             
             String tipoObjeto = (String)listaRecebida.get(0);
-            if (tipoObjeto.equals("Boolean")) {
-                return (boolean)listaRecebida.get(1);
-            } else if (tipoObjeto.equals("Inteiro")) {
-                return (int)listaRecebida.get(1);
-            } else if (tipoObjeto.equals("List<Quarto>")) {
-                return (List<Quarto>)listaRecebida.get(1);
-            } else if (tipoObjeto.equals("Exception")) {
-                throw (Exception)listaRecebida.get(1);
+            switch (tipoObjeto) {
+                case "Boolean":
+                    return (boolean)listaRecebida.get(1);
+                case "Inteiro":
+                    return (int)listaRecebida.get(1);
+                case "List<Quarto>":
+                    return (List<Quarto>)listaRecebida.get(1);
+                case "Exception":
+                    throw (Exception)listaRecebida.get(1);
             }
-        }   catch (Exception ex) {
+        } catch (Exception ex) {
             throw ex;
         }
         return null;
     }
-
 }

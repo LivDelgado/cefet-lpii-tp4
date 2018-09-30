@@ -20,14 +20,14 @@ public class ManterHospede implements IManterHospede {
     public boolean inserir(Hospede hospede)
             throws NegocioException, SQLException {
         // testa tamanho dos campos
-        if (hospede.getCodCPF().length() != 11) {
+        if (hospede.getCodCPF().length() != 14) {
             throw new NegocioException("O CPF do hóspede tem uma quantidade de caracteres diferente de 11.");
         }
         if (hospede.getNomHospede().length() > 90) {
             throw new NegocioException("O nome do hóspede ultrapassou os 90 caracteres máximos permitidos.");
         }
-        if (hospede.getDesTelefone().length() > 15) {
-            throw new NegocioException("O telefone do hóspede ultrapassou os 15 caracteres máximos permitidos.");
+        if (hospede.getDesTelefone().length() != 14) {
+            throw new NegocioException("O telefone do hóspede ultrapassou os caracteres máximos permitidos ou não possui o tamanho necessário.");
         }
         if (hospede.getNomHospede().length() > 90) {
             throw new NegocioException("O email do hóspede ultrapassou os 90 caracteres máximos permitidos.");
@@ -74,14 +74,14 @@ public class ManterHospede implements IManterHospede {
     public boolean alterar(String codRegistro, Hospede hospede)
             throws NegocioException, SQLException {
         // testa tamanho dos campos
-        if (hospede.getCodCPF().length() != 11) {
+        if (hospede.getCodCPF().length() != 14) {
             throw new NegocioException("O CPF do hóspede tem uma quantidade de caracteres diferente de 11.");
         }
         if (hospede.getNomHospede().length() > 90) {
             throw new NegocioException("O nome do hóspede ultrapassou os 90 caracteres máximos permitidos.");
         }
-        if (hospede.getDesTelefone().length() > 15) {
-            throw new NegocioException("O telefone do hóspede ultrapassou os 15 caracteres máximos permitidos.");
+        if (hospede.getDesTelefone().length() != 14) {
+            throw new NegocioException("O telefone do hóspede ultrapassou os caracteres máximos permitidos ou não possui o tamanho necessário.");
         }
         if (hospede.getNomHospede().length() > 90) {
             throw new NegocioException("O email do hóspede ultrapassou os 90 caracteres máximos permitidos.");
